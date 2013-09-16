@@ -1,0 +1,7 @@
+http://blog.dmatoso.com/2011/09/git-no-windows-github/
+
+http://rogerdudler.github.io/git-guide/index.pt_BR.html
+
+http://git-scm.com/book/pt-br/
+
+http://slid.es/fholiveira/senac-git
