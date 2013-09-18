@@ -1,0 +1,15 @@
+//se identificar
+
+git config --global user.name "Gabriel Vieira"
+git config --global user.email "viera_frifri@hotmail.com"
+
+//commit do arquivo alterado 
+
+git add arquivo
+git commit -m "Primeiro commit"
+
+//lancar no repositorio
+git push origin master
+
+//baixar do repositorio
+$ git pull origin master
