@@ -8,7 +8,7 @@ LIBS=  -lallegro -lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro
 all: exemplo
 
 exemplo: $(OBJ)
-	$(CC) -o $(EXEC) $^ $(LIBS)
+	$(CC) -o $(EXEC) $^ $(CFLAGS) $(LIBS)
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
