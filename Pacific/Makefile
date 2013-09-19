@@ -3,7 +3,7 @@ CFLAGS= -W -Wall
 EXEC= Pacific
 SRC= $(wildcard *.c)
 OBJ= $(SRC:.c=.o)
-LIBS=  -lallegro -lallegro_primitives -lallegro -lallegro_font -lallegro_ttf -lallegro_image
+LIBS=  -lallegro -lallegro_audio -lallegro_acodec -lallegro_primitives -lallegro -lallegro_font -lallegro_ttf -lallegro_image
 
 all: exemplo
 

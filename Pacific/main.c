@@ -2,19 +2,23 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_primitives.h>
 #include <stdio.h>
 #include <stdbool.h>
-   
+    
  //Define o tamanho da tela
 const int LARGURA_TELA = 640;
 const int ALTURA_TELA = 480;
  
 // Variaveis especiais do ALLEGRO 
+ALLEGRO_SAMPLE *som;
 ALLEGRO_DISPLAY *janela = NULL;
 ALLEGRO_EVENT_QUEUE *fila_eventos = NULL;
 ALLEGRO_BITMAP *fundo = NULL;
 ALLEGRO_BITMAP *carro = NULL;
+ALLEGRO_BITMAP *carro2 = NULL;
 ALLEGRO_FONT *fonte = NULL;
 ALLEGRO_KEYBOARD_STATE *estado_teclado = NULL;
  
@@ -96,10 +100,51 @@ bool inicializar()
         return false;
     }
 
+    carro2 = al_load_bitmap("carro2.png");
+    if (!carro2)
+    {
+        fprintf(stderr, "Falha ao carregar imagem do carro2 .\n");
+        al_destroy_display(janela);
+        al_destroy_event_queue(fila_eventos);
+        return false;
+    }
+
+    if(!al_install_audio())
+    {
+     fprintf(stderr, "Falha ao inicializar o audio.\n");
+        return false;
+     }
+    
+    if(!al_init_acodec_addon())
+    {
+        fprintf(stderr, "Falha ao iniciar o audio codec.!\n");
+      return false;
+    }
+    
+    if (!al_reserve_samples(1))
+    {
+        fprintf(stderr, "Falha ao alocar canais de audio.\n");
+        return false;
+    }
+
+    som = al_load_sample("som.wav");
+
     al_register_event_source(fila_eventos, al_get_keyboard_event_source());
     al_register_event_source(fila_eventos, al_get_display_event_source(janela));
  
     return true;
+}
+
+void auto_car(float *teste)
+{
+
+    if (*teste >= ALTURA_TELA)
+    {
+        *teste = 0;
+    }
+
+    al_draw_bitmap_region(carro2, 16, 5, 36 , 60 , 218.500000 , *teste ,0);
+    *teste = *teste + 1.2;
 }
 
 
@@ -107,22 +152,29 @@ void movimentar(int tecla, float *x, float *y, float *posx , float *posy,float *
 {
     float temp;
 
+
     if (*x >= LARGURA_TELA)
     {
-        *x = 30.0;
+        *x = 0;
+         al_play_sample(som, 1.0, 0.0,1.3,ALLEGRO_PLAYMODE_ONCE,NULL);
     }
     else if (*x <= 0)
     {
-        *x = LARGURA_TELA - 30;
+        //*x = LARGURA_TELA - 30;
+        *x = LARGURA_TELA;
+         al_play_sample(som, 1.0, 0.0,1.3,ALLEGRO_PLAYMODE_ONCE,NULL);
     }
 
     if (*y >= ALTURA_TELA)
     {
-        *y = 30.0;
+        *y = 0;
+         al_play_sample(som, 1.0, 0.0,1.3,ALLEGRO_PLAYMODE_ONCE,NULL);
     }
     else if (*y <= 0)
     {
-        *y = ALTURA_TELA - 30;
+         al_play_sample(som, 1.0, 0.0,1.3,ALLEGRO_PLAYMODE_ONCE,NULL);
+        //*y = ALTURA_TELA - 30;
+        *y = ALTURA_TELA;
     }
 
     if (tecla == 1 || tecla == 2 )
@@ -187,8 +239,10 @@ int main(void)
     float posy = 5;
     float tamx = 36;
     float tamy = 60;
+    float teste = 30;
 
    // al_convert_mask_to_alpha(carro, al_map_rgb(106,70,47));
+    
 
     if (!inicializar())
     {
@@ -197,6 +251,9 @@ int main(void)
  
     al_draw_bitmap(fundo, 0, 0, 0);
     
+    //Som do jogo 
+    //al_play_sample(som, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+
     while (!sair)
     {
 
@@ -211,19 +268,19 @@ int main(void)
                         {
                         case ALLEGRO_KEY_UP:
                             tecla = 1;
-                            printf("tecla1\n");
+                            printf("tecla1 %f  %f\n",x,y);
                             break;
                         case ALLEGRO_KEY_DOWN:
                             tecla = 2;
-                            printf("tecla2\n");
+                            printf("tecla2 %f  %f\n",x,y);
                             break;
                         case ALLEGRO_KEY_LEFT:
                             tecla = 3;
-                            printf("tecla3\n");
+                            printf("tecla3 %f  %f\n",x,y);
                             break;
                         case ALLEGRO_KEY_RIGHT:
                             tecla = 4;
-                            printf("tecla4\n");
+                            printf("tecla4 %f  %f\n",x,y);
                             break;
                         }
                     }
@@ -240,10 +297,12 @@ int main(void)
                 
             }
  
+        al_draw_bitmap(fundo, 0, 0, 0);
         movimentar(tecla,&x,&y,&posx,&posy,&tamx,&tamy);
-       
+        auto_car(&teste);
         al_draw_bitmap_region(carro, posx, posy, tamx , tamy , x ,y ,0);
-        //al_draw_filled_circle(x, y, raio, al_map_rgb(255, 0, 0));
+        
+
         al_flip_display();
 
         al_rest(0.005);
