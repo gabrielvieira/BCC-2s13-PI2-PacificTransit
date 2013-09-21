@@ -1,3 +1,8 @@
+//
+//  Created by GABRIEL VIEIRA on 10/09/13.
+//  Copyright (c) 2013 GABRIEL VIEIRA. All rights reserved.
+//
+
 // Inicializar as variaveis
 
 bool inicializar()
@@ -44,6 +49,7 @@ bool inicializar()
     al_set_window_title(janela, "Pacific Transit 1.3.5");
  
     fonte = al_load_font("SourceCodePro-Regular.ttf", 60, 0);
+    fonte2 = al_load_font("SourceCodePro-Regular.ttf", 30, 0);
     if (!fonte)
     {
         fprintf(stderr, "Falha ao carregar \"fonte comic.ttf\".\n");

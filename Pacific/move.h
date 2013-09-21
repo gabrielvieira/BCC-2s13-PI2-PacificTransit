@@ -1,68 +1,73 @@
-void auto_car(float *car1, float *car2, float *car3)
+//
+//  Created by GABRIEL VIEIRA on 10/09/13.
+//  Copyright (c) 2013 GABRIEL VIEIRA. All rights reserved.
+//
+
+void init_car(Car *car)
 {
-    if (*car1 >= ALTURA_TELA)
+    car->image.imageY = 5;
+    car->image.imageX = 16;
+    car->image.width = 36;
+    car->image.height = 60;
+    car->image.x = 100;
+    car->image.y = 100;
+    car->image.image = carro;
+}
+
+void screen_limit(Car *car)
+{
+    if (car->image.x >= LARGURA_TELA)
     {
-        *car1 = 0;
+        car->image.x = 0;    
+    }
+    else if (car->image.x <= 0)
+    {
+        car->image.x = LARGURA_TELA;
     }
 
-    if (*car2 <= 0)
+    if (car->image.y >= ALTURA_TELA)
     {
-        *car2 = ALTURA_TELA;
+        car->image.y = 0;    
     }
-
-    if (*car3 <= 0)
+    else if (car->image.y <= 0)
     {
-        *car3 = LARGURA_TELA;
+        car->image.y = ALTURA_TELA;
     }
+}
 
-    al_draw_bitmap_region(carro2, 16, 5, 36 , 60 , 147.500000 , *car1 ,0);
-    al_draw_bitmap_region(carro2, 16, 202, 36 , 60 , 680.500000 , *car2 ,0);
-    al_draw_bitmap_region(carro2, 5, 81, 60 , 36 , *car3 , 150 ,0);
+void move_auto_car(Car *car)
+{
+    screen_limit(car);
     
-    *car2 = *car2 - 1.0;
-    *car1 = *car1 + 1.2;
-    *car3 = *car3 - 0.8;
+    car->image.y = car->image.y + 1.0;
+
+    al_draw_bitmap_region(car->image.image,  car->image.imageX  , car->image.imageY,
+    car->image.width , car->image.height ,LARGURA_TELA * 0.8 , car->image.y ,0);
 }
 
 
-void player_car(int tecla, float *x, float *y, float *posx , float *posy,float *tamx , float *tamy)
+void move_player_car(int tecla,Car *car)
 {
     float temp;
     
-    if (*x >= LARGURA_TELA)
-    {
-        *x = 0;    
-    }
-    else if (*x <= 0)
-    {
-        *x = LARGURA_TELA;
-    }
-
-    if (*y >= ALTURA_TELA)
-    {
-        *y = 0;    
-    }
-    else if (*y <= 0)
-    {
-        *y = ALTURA_TELA;
-    }
+    screen_limit(car);
 
     if (tecla == 1 || tecla == 2 )
     {
-        if (*tamy < *tamx)
+        if (car->image.height < car->image.width)
         {
-            temp = *tamx;
-            *tamx = *tamy;
-            *tamy = temp;
+            temp = car->image.width;
+            car->image.width = car->image.height;
+            car->image.height = temp;
         }
     }
     else if (tecla == 3 || tecla == 4)
     {
-        if (*tamy > *tamx)
+        if (car->image.height > car->image.width)
         {
-            temp = *tamx;
-            *tamx = *tamy;
-            *tamy = temp;
+            temp = car->image.width;
+            car->image.width = car->image.height;
+            car->image.height = temp;
         }
     }
 
@@ -71,28 +76,29 @@ void player_car(int tecla, float *x, float *y, float *posx , float *posy,float *
         switch (tecla)
         {
             case 1:
-                *y = *y - 1.5;
-                *posx = 15;
-                *posy = 202;
+                car->image.y = car->image.y - 1.5;
+                car->image.imageX = 15;
+                car->image.imageY = 202;
                 break;
             case 2:
-                *y = *y + 1.5;
-                *posx = 16;
-                *posy = 5;
+                car->image.y = car->image.y + 1.5;
+                car->image.imageX = 16;
+                car->image.imageY = 5;
                 break;
             case 3:
-                *x = *x - 1.5;
-                *posx = 5;
-                *posy = 81;
+                car->image.x = car->image.x - 1.5;
+                car->image.imageX = 5;
+                car->image.imageY = 81;
                 break;
             case 4:
-                *x = *x + 1.5;
-                *posx = 5;
-                *posy = 148;
+                car->image.x = car->image.x + 1.5;
+                car->image.imageX = 5;
+                car->image.imageY = 148;
                 break;
         }
 
     }
 
-    al_draw_bitmap_region(carro, *posx, *posy, *tamx , *tamy , *x ,*y ,0);
+    al_draw_bitmap_region(car->image.image, car->image.imageX, car->image.imageY,
+     car->image.width , car->image.height , car->image.x ,car->image.y ,0);
 }
