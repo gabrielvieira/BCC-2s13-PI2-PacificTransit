@@ -16,8 +16,15 @@ int main(void)
     float tamy = 60;
     float car1 = 30;
     float car2 = 200;
+    float car3 = 200;
     bool menu_ativo = true;
-    bool key_release = false;
+    bool key_release = true;
+    bool pause = false;
+    //TESTE CONVERSAO DE INT PARA STRING
+    int aInt = 368;
+    char str[30];
+    sprintf(str, "%d", aInt);
+    strcat(str, " concatena");
 
     //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTE
     if (!inicializar())
@@ -56,13 +63,22 @@ int main(void)
                         break;
                     case ALLEGRO_KEY_ENTER:
                         menu_ativo = false;                          
+                        break;
+                    case ALLEGRO_KEY_ESCAPE:
+                        if (pause)
+                        {
+                            pause = false;
+                        }
+                        else
+                        {
+                            pause = true;
+                        }                        
                         break;  
                     }
                 }
                 else if(evento.type == ALLEGRO_EVENT_KEY_UP)
                 {
-                    key_release = true;
-                    tecla = 0;
+                    tecla = 0; 
                 }
                 
                 //FECHAR JANELA    
@@ -70,26 +86,35 @@ int main(void)
                 {
                     sair = true;
                 } 
+                    
                 
             }
         
-        
+        //PROCESSAMENTO DAS ENTRADAS RECEBIDAS PELOS USUARIOS
         if (menu_ativo)
         {
             al_draw_bitmap(menu, 0, 0, 0);
         }
         else
         {
-            //al_draw_bitmap(fundo, 0, 0, 0);
-            al_draw_bitmap_region(fundo, 70, 1, LARGURA_TELA , ALTURA_TELA , 0 ,0 ,0);
-            movimentar(tecla,&x,&y,&posx,&posy,&tamx,&tamy);
-            auto_car(&car1,&car2);
-            al_draw_bitmap_region(carro, posx, posy, tamx , tamy , x ,y ,0);
+            if (pause)
+            {
+                al_draw_text(fonte, al_map_rgb(255, 255, 255), LARGURA_TELA / 2,
+                ALTURA_TELA / 2 - al_get_font_ascent(fonte) / 2,
+                ALLEGRO_ALIGN_CENTRE, "Pause");
+            }
+            else
+            {
+                al_draw_bitmap_region(fundo, 70, 1, LARGURA_TELA , ALTURA_TELA , 0 ,0 ,0);
+                auto_car(&car1,&car2,&car3);
+                player_car(tecla,&x,&y,&posx,&posy,&tamx,&tamy);
+            }
+            
         }
         
         //MOSTRAR A TELA
         al_flip_display();
-        //PARA CONTROLAR O TEMPO DE EXECUÇÃO
+        //PARA CONTROLAR O TEMPO DE EECUÇÃO
         al_rest(0.005);
     }
  

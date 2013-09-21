@@ -1,4 +1,4 @@
-void auto_car(float *car1, float *car2)
+void auto_car(float *car1, float *car2, float *car3)
 {
     if (*car1 >= ALTURA_TELA)
     {
@@ -10,14 +10,22 @@ void auto_car(float *car1, float *car2)
         *car2 = ALTURA_TELA;
     }
 
+    if (*car3 <= 0)
+    {
+        *car3 = LARGURA_TELA;
+    }
+
     al_draw_bitmap_region(carro2, 16, 5, 36 , 60 , 147.500000 , *car1 ,0);
     al_draw_bitmap_region(carro2, 16, 202, 36 , 60 , 680.500000 , *car2 ,0);
+    al_draw_bitmap_region(carro2, 5, 81, 60 , 36 , *car3 , 150 ,0);
+    
     *car2 = *car2 - 1.0;
     *car1 = *car1 + 1.2;
+    *car3 = *car3 - 0.8;
 }
 
 
-void movimentar(int tecla, float *x, float *y, float *posx , float *posy,float *tamx , float *tamy)
+void player_car(int tecla, float *x, float *y, float *posx , float *posy,float *tamx , float *tamy)
 {
     float temp;
     
@@ -85,4 +93,6 @@ void movimentar(int tecla, float *x, float *y, float *posx , float *posy,float *
         }
 
     }
+
+    al_draw_bitmap_region(carro, *posx, *posy, *tamx , *tamy , *x ,*y ,0);
 }

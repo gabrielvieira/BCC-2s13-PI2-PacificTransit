@@ -5,12 +5,16 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_primitives.h>
+#include <string.h>
 #include <stdio.h>
 #include <stdbool.h> 
 
  //Define o tamanho da tela
 const int LARGURA_TELA = 800;
 const int ALTURA_TELA = 600;
+const float ALTURA_CARRO = 60;
+const float LARGURA_CARRO = 36;
+
  
 // Variaveis especiais do ALLEGRO 
 ALLEGRO_SAMPLE *som;

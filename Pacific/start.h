@@ -43,7 +43,7 @@ bool inicializar()
  
     al_set_window_title(janela, "Pacific Transit 1.3.5");
  
-    fonte = al_load_font("SourceCodePro-Regular.ttf", 72, 0);
+    fonte = al_load_font("SourceCodePro-Regular.ttf", 60, 0);
     if (!fonte)
     {
         fprintf(stderr, "Falha ao carregar \"fonte comic.ttf\".\n");
