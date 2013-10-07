@@ -7,10 +7,10 @@ void init_car(Car *car)
 {
     car->image.imageY = 5;
     car->image.imageX = 16;
-    car->image.width = 36;
-    car->image.height = 60;
-    car->image.x = 100;
-    car->image.y = 100;
+    car->image.width = LARGURA_CARRO;
+    car->image.height = ALTURA_CARRO;
+    car->image.x = ALTURA_TELA /2;
+    car->image.y = LARGURA_TELA /2;
     car->image.image = carro;
 }
 
@@ -35,7 +35,9 @@ void screen_limit(Car *car)
     }
 }
 
-void move_auto_car(Car *car)
+//mover carro controlado pela cpu
+/*
+void move_auto_car1(Car *car)
 {
     screen_limit(car);
     
@@ -44,9 +46,9 @@ void move_auto_car(Car *car)
     al_draw_bitmap_region(car->image.image,  car->image.imageX  , car->image.imageY,
     car->image.width , car->image.height ,LARGURA_TELA * 0.8 , car->image.y ,0);
 }
+*/
 
-
-void move_player_car(int tecla,Car *car)
+void move_player_car(int tecla,Car *car, float *telax , float *telay)
 {
     float temp;
     
@@ -76,29 +78,34 @@ void move_player_car(int tecla,Car *car)
         switch (tecla)
         {
             case 1:
-                car->image.y = car->image.y - 1.5;
+               // car->image.y = car->image.y - 1.5;
                 car->image.imageX = 15;
                 car->image.imageY = 202;
+                *telay = *telay -1.5;
                 break;
             case 2:
-                car->image.y = car->image.y + 1.5;
+                //car->image.y = car->image.y + 1.5;
                 car->image.imageX = 16;
                 car->image.imageY = 5;
+                *telay = *telay + 1.5;
                 break;
             case 3:
-                car->image.x = car->image.x - 1.5;
+                //car->image.x = car->image.x - 1.5;
                 car->image.imageX = 5;
                 car->image.imageY = 81;
+                *telax = *telax - 1.5;
                 break;
             case 4:
-                car->image.x = car->image.x + 1.5;
+                //car->image.x = car->image.x + 1.5;
                 car->image.imageX = 5;
                 car->image.imageY = 148;
+                *telax = *telax + 1.5;
                 break;
         }
 
     }
 
+    ///printf("%f  %f\n",car->image.y, car->image.x);
     al_draw_bitmap_region(car->image.image, car->image.imageX, car->image.imageY,
      car->image.width , car->image.height , car->image.x ,car->image.y ,0);
 }

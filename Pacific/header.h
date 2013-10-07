@@ -18,8 +18,14 @@
  //Define o tamanho da tela
 const int LARGURA_TELA = 800;
 const int ALTURA_TELA = 600;
+
+//tamanho do carro 
 const float ALTURA_CARRO = 60;
 const float LARGURA_CARRO = 36;
+
+//limites da rua para printar na tela
+const float LIMITE_IMG_SUP = 260;
+const float LIMITE_IMG_INF = 550;
 
  
 // Variaveis especiais do ALLEGRO 

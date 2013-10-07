@@ -14,6 +14,7 @@ int main(void)
     int tecla = 0;
     bool menu_ativo = true;
     bool pause = false;
+    float telax = 50 ,telay = 260;
 
     //TESTE CONVERSAO DE INT PARA STRING
     int aInt = 368;
@@ -22,7 +23,6 @@ int main(void)
     strcat(str, " concatena");
 
     // STRUCT FUNCIONANDO :)
-    Car *autoCar1 = malloc(sizeof(Car));
     Car *playerCar = malloc(sizeof(Car));
     
     //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTE
@@ -31,9 +31,11 @@ int main(void)
         return -1;
     }
 
-    init_car(autoCar1);
+    //init_car(autoCar1);
+   // init_car(autoCar2);
     init_car(playerCar);
 
+    autoCar2->image.image = carro2;
     //DESENHA IMAGEM DE FUNDO
     al_draw_bitmap(menu, 0, 0, 0);
 
@@ -69,6 +71,9 @@ int main(void)
                 case ALLEGRO_KEY_ENTER:
                     menu_ativo = false;                          
                     break;
+                case ALLEGRO_KEY_M:
+                    menu_ativo = true;                          
+                    break;    
                 case ALLEGRO_KEY_ESCAPE:
                     if (pause)
                     {
@@ -93,7 +98,6 @@ int main(void)
             } 
             
         }
-        
 
         //PROCESSAMENTO DAS ENTRADAS RECEBIDAS PELOS USUARIOS
         if (menu_ativo)
@@ -102,8 +106,11 @@ int main(void)
         }
         else
         {
-            al_draw_bitmap_region(fundo, 70, 1, LARGURA_TELA , ALTURA_TELA , 0 ,0 ,0);
-
+            //al_draw_bitmap_region(fundo, 590, 50, LARGURA_TELA , ALTURA_TELA , 0 ,0 ,0);
+          //  al_draw_scaled_bitmap(fundo, telax,telay,320,260, ,0 , LARGURA_TELA,ALTURA_TELA ,0);
+            al_draw_scaled_bitmap(fundo, telax,telay,320,260,0 ,0 , LARGURA_TELA,ALTURA_TELA ,0);
+          
+           
             if (pause)
             {
                 al_draw_text(fonte, al_map_rgb(255, 255, 255), LARGURA_TELA / 2,
@@ -112,12 +119,11 @@ int main(void)
             }
             else
             {
-                move_auto_car(autoCar1);
-                move_player_car(tecla,playerCar);
+                move_player_car(tecla,playerCar,&telax,&telay);
             }
 
             al_draw_text(fonte2, al_map_rgb(255, 0, 0), LARGURA_TELA * 0.99, ALTURA_TELA * 0.01,
-            ALLEGRO_ALIGN_RIGHT, "Pontuação teste");
+            ALLEGRO_ALIGN_RIGHT, "Pontuação");
         }
 
         //MOSTRAR A TELA
