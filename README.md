@@ -1,4 +1,4 @@
-allegro 5
+Allegro 5
 =======
 
 Gabriel Vieira
