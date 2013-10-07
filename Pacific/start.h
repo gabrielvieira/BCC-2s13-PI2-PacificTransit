@@ -74,7 +74,7 @@ bool inicializar()
         return false;
     }
 
-    menu = al_load_bitmap("menu.jpg");
+    menu = al_load_bitmap("img/menu.jpg");
     if (!menu)
     {
         fprintf(stderr, "Falha ao carregar imagem de menu.\n");
