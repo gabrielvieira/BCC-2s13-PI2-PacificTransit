@@ -4,7 +4,7 @@ allegro 5
 Gabriel Vieira
 =====
 
-PI - 2 Semestre BCC Senac - Educa��o no Transito
+PI - 2 Semestre BCC Senac - Educa&ccedil;&atilde;o no Transito
 
 **MakeFile**
 
