@@ -48,8 +48,8 @@ bool inicializar()
  
     al_set_window_title(janela, "Pacific Transit 1.3.5");
  
-    fonte = al_load_font("SourceCodePro-Regular.ttf", 60, 0);
-    fonte2 = al_load_font("SourceCodePro-Regular.ttf", 30, 0);
+    fonte = al_load_font("font/SourceCodePro-Regular.ttf", 60, 0);
+    fonte2 = al_load_font("font/SourceCodePro-Regular.ttf", 30, 0);
     if (!fonte)
     {
         fprintf(stderr, "Falha ao carregar \"fonte comic.ttf\".\n");
@@ -65,7 +65,7 @@ bool inicializar()
         return false;
     }
  
-    fundo = al_load_bitmap("bg.png");
+    fundo = al_load_bitmap("img/bg.png");
     if (!fundo)
     {
         fprintf(stderr, "Falha ao carregar imagem de fundo.\n");
@@ -83,7 +83,7 @@ bool inicializar()
         return false;
     }
  
-    carro = al_load_bitmap("carro.png");
+    carro = al_load_bitmap("img/carro.png");
     if (!carro)
     {
         fprintf(stderr, "Falha ao carregar imagem do carro .\n");
@@ -92,7 +92,7 @@ bool inicializar()
         return false;
     }
 
-    carro2 = al_load_bitmap("carro2.png");
+    carro2 = al_load_bitmap("img/carro2.png");
     if (!carro2)
     {
         fprintf(stderr, "Falha ao carregar imagem do carro2 .\n");
@@ -119,7 +119,7 @@ bool inicializar()
         return false;
     }
 
-    som = al_load_sample("som.wav"); 
+    som = al_load_sample("sound/song.wav"); 
 
     al_register_event_source(fila_eventos, al_get_keyboard_event_source());
     al_register_event_source(fila_eventos, al_get_display_event_source(janela));

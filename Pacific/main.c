@@ -11,10 +11,11 @@ int main(void)
 {
     //DECLARAÇÃO DE VARIAVEIS
     bool sair = false;
+    bool move_permit = true;
     int tecla = 0;
     bool menu_ativo = true;
     bool pause = false;
-    float telax = 50 ,telay = 260;
+    float telax = 50 ,telay = 2400;
 
     //TESTE CONVERSAO DE INT PARA STRING
     int aInt = 368;
@@ -31,16 +32,14 @@ int main(void)
         return -1;
     }
 
-    //init_car(autoCar1);
-   // init_car(autoCar2);
     init_car(playerCar);
 
-    autoCar2->image.image = carro2;
+    
     //DESENHA IMAGEM DE FUNDO
     al_draw_bitmap(menu, 0, 0, 0);
 
     //SOM DO JOGO
-    //al_play_sample(som, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+    al_play_sample(som, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
 
     //LOOP PRINCIPAL DO JOGO
     while (!sair)
@@ -89,6 +88,7 @@ int main(void)
             else if(evento.type == ALLEGRO_EVENT_KEY_UP)
             {
                 tecla = 0; 
+                move_permit = true;
             }
                 
             //FECHAR JANELA    
@@ -106,10 +106,7 @@ int main(void)
         }
         else
         {
-            //al_draw_bitmap_region(fundo, 590, 50, LARGURA_TELA , ALTURA_TELA , 0 ,0 ,0);
-          //  al_draw_scaled_bitmap(fundo, telax,telay,320,260, ,0 , LARGURA_TELA,ALTURA_TELA ,0);
-            al_draw_scaled_bitmap(fundo, telax,telay,320,260,0 ,0 , LARGURA_TELA,ALTURA_TELA ,0);
-          
+            move_screen(&telay);
            
             if (pause)
             {
@@ -119,7 +116,7 @@ int main(void)
             }
             else
             {
-                move_player_car(tecla,playerCar,&telax,&telay);
+                move_player_car(tecla,playerCar,&move_permit);
             }
 
             al_draw_text(fonte2, al_map_rgb(255, 0, 0), LARGURA_TELA * 0.99, ALTURA_TELA * 0.01,
@@ -129,7 +126,7 @@ int main(void)
         //MOSTRAR A TELA
         al_flip_display();
         //PARA CONTROLAR O TEMPO DE EECUÇÃO
-        al_rest(0.005);
+        al_rest(0.003);
     }
  
     //FECHA O JOGO AO SAIR DO LOOP PRINCIPAL

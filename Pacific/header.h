@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h> 
+#include <time.h>
 
  //Define o tamanho da tela
 const int LARGURA_TELA = 800;
@@ -24,10 +25,12 @@ const float ALTURA_CARRO = 60;
 const float LARGURA_CARRO = 36;
 
 //limites da rua para printar na tela
-const float LIMITE_IMG_SUP = 260;
-const float LIMITE_IMG_INF = 550;
+const float LIMITE_IMG_SUP = 220;
+const float LIMITE_IMG_INF = 290;
 
- 
+//vetor de posições fixas da tela
+float positions[] = {243,298,353,415,470,525};
+
 // Variaveis especiais do ALLEGRO 
 ALLEGRO_SAMPLE *som;
 ALLEGRO_DISPLAY *janela = NULL;
@@ -58,6 +61,7 @@ typedef struct
 	typedef struct
 	{
 		Image image;
+		int position;
 		
 	}Car;
 
