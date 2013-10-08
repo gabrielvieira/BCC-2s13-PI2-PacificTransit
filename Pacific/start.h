@@ -65,7 +65,7 @@ bool inicializar()
         return false;
     }
  
-    fundo = al_load_bitmap("img/bg.png");
+    fundo = al_load_bitmap("img/back.png");
     if (!fundo)
     {
         fprintf(stderr, "Falha ao carregar imagem de fundo.\n");

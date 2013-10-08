@@ -15,7 +15,7 @@ int main(void)
     int tecla = 0;
     bool menu_ativo = true;
     bool pause = false;
-    float telax = 50 ,telay = 2400;
+    float telax = 50 ,telay = 600;
 
     //TESTE CONVERSAO DE INT PARA STRING
     int aInt = 368;

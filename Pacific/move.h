@@ -24,7 +24,7 @@ void move_screen(float *telay)
 
     if (*telay == 0)
     {
-        *telay = 2400;
+        *telay = 600;
     }
 
     al_draw_bitmap_region(fundo,0,*telay, LARGURA_TELA, ALTURA_TELA ,0,0,0);
