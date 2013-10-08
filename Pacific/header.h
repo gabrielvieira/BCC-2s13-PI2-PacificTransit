@@ -20,7 +20,7 @@
 const int LARGURA_TELA = 800;
 const int ALTURA_TELA = 600;
 
-//tamanho do carro 
+//tamanho do carro   
 const float ALTURA_CARRO = 60;
 const float LARGURA_CARRO = 36;
 
@@ -29,8 +29,9 @@ const float LIMITE_IMG_SUP = 220;
 const float LIMITE_IMG_INF = 290;
 
 //vetor de posições fixas da tela
-float positions[] = {243,298,353,415,470,525};
+float positions[] = {245,298,353,415,470,523};
 
+//teste
 // Variaveis especiais do ALLEGRO 
 ALLEGRO_SAMPLE *som;
 ALLEGRO_DISPLAY *janela = NULL;
