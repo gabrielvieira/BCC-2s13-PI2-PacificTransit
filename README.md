@@ -1,6 +1,10 @@
-Gabriel Vieira - Rodrigo Rodigues
+ALLEGRO 5
+=======
 
-PI - 2 Semestre BCC Senac - Educação no Transito
+Gabriel Vieira
+=====
+
+PI - 2 Semestre BCC Senac - Educa&ccedil;&atilde;o no Transito
 
 **MakeFile**
 
