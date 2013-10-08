@@ -25,6 +25,7 @@ int main(void)
 
     // STRUCT FUNCIONANDO :)
     Car *playerCar = malloc(sizeof(Car));
+    Car *autoCar = malloc(3 * sizeof(Car));
     
     //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTE
     if (!inicializar())
@@ -33,8 +34,14 @@ int main(void)
     }
 
     init_car(playerCar);
+    init_car(&autoCar[0]);
+    autoCar[0].position = 3;
+    autoCar[0].image.x = positions[3];
 
+    printf("%d\n", autoCar[0].position);
     
+    
+ 
     //DESENHA IMAGEM DE FUNDO
     al_draw_bitmap(menu, 0, 0, 0);
 
@@ -107,6 +114,8 @@ int main(void)
         else
         {
             move_screen(&telay);
+            move_auto_car(&autoCar[0]);
+           // move_auto_car(&autoCar[1]);
            
             if (pause)
             {

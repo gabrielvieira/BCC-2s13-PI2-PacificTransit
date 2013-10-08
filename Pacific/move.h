@@ -5,7 +5,7 @@
 
 void init_car(Car *car)
 {   
-    srand(time(NULL));
+    srand(time(0));
     int r = rand() & 5;
 
     car->image.imageX = 15;
@@ -30,19 +30,18 @@ void move_screen(float *telay)
     al_draw_bitmap_region(fundo,0,*telay, LARGURA_TELA, ALTURA_TELA ,0,0,0);
 }
 
-
-//mover carro controlado pela cpu
-/*
-void move_auto_car1(Car *car)
+void move_auto_car(Car *car)
 {
-    screen_limit(car);qqqqqqqq
+    //car->image.y = car->image.y - 1.5;
     
-    car->image.y = car->image.y + 1.0;
+    if (car->image.y < 0)
+    {
+       car->image.y = 540;
+    }
 
-    al_draw_bitmap_region(car->image.image,  car->image.imageX  , car->image.imageY,
-    car->image.width , car->image.height ,LARGURA_TELA * 0.8 , car->image.y ,0);
+    al_draw_bitmap_region(carro2, car->image.imageX, car->image.imageY,
+     car->image.width , car->image.height , car->image.x ,car->image.y ,0);
 }
-*/
 
 void move_player_car(int tecla,Car *car,bool *move_permit)
 {
@@ -82,7 +81,4 @@ void move_player_car(int tecla,Car *car,bool *move_permit)
 
     al_draw_bitmap_region(car->image.image, car->image.imageX, car->image.imageY,
      car->image.width , car->image.height , car->image.x ,car->image.y ,0);
-
-    
-    //printf("%d \n", r);
 }
