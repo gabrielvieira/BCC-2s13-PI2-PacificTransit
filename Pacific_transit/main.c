@@ -10,6 +10,7 @@
 
 int main(void)
 {
+    srand(time(NULL));
     //DECLARAÇÃO DE VARIAVEIS
     bool sair = false;
     int i;
@@ -30,7 +31,7 @@ int main(void)
 
     // STRUCT FUNCIONANDO :)
     Car *playerCar = malloc(sizeof(Car));
-    Car *autoCar = malloc(3 * sizeof(Car));
+    Car *autoCar = malloc(5 * sizeof(Car));
     
     //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTE
     if (!inicializar())
@@ -125,26 +126,23 @@ int main(void)
         }
         else
         {
-            move_screen(&telay);
-            for (i = 0; i < 5; i++)
-            {
-                move_auto_car(&autoCar[i]);
-                colision(playerCar,&autoCar[i]);  
-            }
-    
-            //move_auto_car(&autoCar[1]);
-           
             if (pause)
             {
                 al_draw_text(fonte, al_map_rgb(255, 255, 255), LARGURA_TELA / 2,
                 ALTURA_TELA / 2 - al_get_font_ascent(fonte) / 2,
                 ALLEGRO_ALIGN_CENTRE, "Pause");
-            }
+            }    
             else
             {
+                move_screen(&telay);
+                for (i = 0; i < 5; i++)
+                {
+                    move_auto_car(&autoCar[i]);
+                    colision(playerCar,&autoCar[i]);  
+                }
                 move_player_car(tecla,playerCar,&move_permit);
             }
-
+           
             al_draw_text(fonte2, al_map_rgb(255, 0, 0), LARGURA_TELA * 0.99, ALTURA_TELA * 0.01,
             ALLEGRO_ALIGN_RIGHT, "Pontuação");
         }

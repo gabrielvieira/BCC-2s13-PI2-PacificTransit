@@ -1,34 +1,54 @@
-//qq
+//
 //  Created by GABRIEL VIEIRA on 10/09/13.
 //  Copyright (c) 2013 GABRIEL VIEIRA. All rights reserved.
 //
+
+//MOVIMENTAÇÃO DOS OBSTACULOS
+
+
+
+
+//MOVIMENTAÇÃO DOS CARROS
+int RandomInteger( int low, int high)
+{
+    int k;
+    double d;
+    d = (double) rand( ) / ((double) RAND_MAX + 1);
+    k = d * (high - low + 1);
+    return low + k;
+}
+
 
 void colision(Car *car_player , Car *auto_car)
 { 
     if ((auto_car->position == car_player->position) 
     && ((auto_car->image.y - car_player->image.y) < 60 && (auto_car->image.y - car_player->image.y) > -60))
     {
-       printf("Colidiu pista %d\n",auto_car->position );
+        printf("Colidiu pista %d\n",auto_car->position );
     }
+}
+
+void swap_position(Car *car)
+{
+    int r = RandomInteger(0,5); 
+    int temp = car->position;
+    //trocar posição do carro na pista
+    car->position = pista;
+    pista = temp;
+    car->image.x = positions[car->position];
+    //alterar velocidade do carro na pista
+    car->speed = car_speed[r];
 }
 
 void screen_limit(Car *car)
 {
     if (car->image.y <= -60)
     {
-       car->image.y = 600;
+        car->image.y = 600;
+        swap_position(car);
+        printf("randomizou velo %f\n",car->speed);
     }
-}
 
-int RandomInteger( int low, int high)
-{
-    srand(time(NULL));
-
-    int k;
-    double d;
-    d = (double) rand( ) / ((double) RAND_MAX + 1);
-    k = d * (high - low + 1);
-    return low + k;
 }
 
 void index_position(int p , int n)
@@ -45,10 +65,8 @@ void init_car(Car *car)
     r = RandomInteger(car->number, 5);
     temp = r;
    
-    printf("%d %d\n",car->number ,5);
     temp = number_positions[temp];
-     index_position(car->number, r); 
-      
+    index_position(car->number, r); 
 
     car->image.imageX = 15;
     car->image.imageY = 202;
@@ -58,9 +76,15 @@ void init_car(Car *car)
     car->image.y = LARGURA_TELA /2 - ALTURA_CARRO;
     car->image.image = carro;
     car->position = temp;
+    car->speed = car_speed[car->position];
 
     use_positions[temp] = 1;
-    //printf("%d\n",car->number );
+    printf("%d\n",temp );
+
+    if (car->number == 5)
+    {
+        pista = car->position;
+    }
 }
 
 void move_screen(float *telay)
@@ -79,7 +103,7 @@ void move_auto_car(Car *car)
 {
     screen_limit(car);
 
-    car->image.y = car->image.y - car_speed[car->position];
+    car->image.y = car->image.y - car->speed;
 
     al_draw_bitmap_region(carro2, car->image.imageX, car->image.imageY,
      car->image.width , car->image.height , car->image.x ,car->image.y ,0);

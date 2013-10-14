@@ -36,8 +36,9 @@ const float LIMITE_IMG_INF = 290;
 //vetor de posições fixas da tela
 float positions[] = {245,298,353,415,470,523};
 float use_positions[] = {0,0,0,0,0,0};
-float car_speed[] = {1.2,0.7,1,0.3,1.1,0.5};
+float car_speed[] = {5.5,4.5,3.5,3,5,4};
 int number_positions[] = {0,1,2,3,4,5};
+int pista; 
 
 // Variaveis especiais do ALLEGRO 
 ALLEGRO_SAMPLE *som;
@@ -69,10 +70,19 @@ typedef struct
 	typedef struct
 	{
 		Image image;
+		float speed;
 		int position;
 		int number;
 		
 	}Car;
+
+	typedef struct
+	{
+		Image image;
+		int position;
+		int number;
+		
+	}Plaque;
 
 bool inicializar();
 

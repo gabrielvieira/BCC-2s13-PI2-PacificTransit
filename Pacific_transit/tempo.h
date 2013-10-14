@@ -1,3 +1,4 @@
+
 void iniciarTimer()
 {
     tempoInicial = al_get_time();
