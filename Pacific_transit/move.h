@@ -65,7 +65,7 @@ void init_car(Car *car)
 
 void move_screen(float *telay)
 {
-    *telay -= 1;
+    *telay -= 4;
 
     if (*telay == 0)
     {

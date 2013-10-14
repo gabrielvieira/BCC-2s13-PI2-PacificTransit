@@ -6,6 +6,7 @@
 #include "header.h"
 #include "start.h"
 #include "move.h" 
+#include "tempo.h"
 
 int main(void)
 {
@@ -16,7 +17,10 @@ int main(void)
     int tecla = 0;
     bool menu_ativo = true;
     bool pause = false;
-    float telax = 50 ,telay = 600;
+    //float telax = 50 ,
+    float telay = 600;
+    int frame = 0;
+    bool limitado = true;
 
     //TESTE CONVERSAO DE INT PARA STRING
     int aInt = 368;
@@ -58,6 +62,7 @@ int main(void)
     //LOOP PRINCIPAL DO JOGO
     while (!sair)
     {
+        iniciarTimer();
         //FILA DE EVENTOS
         while(!al_is_event_queue_empty(fila_eventos))
         {
@@ -126,8 +131,7 @@ int main(void)
                 move_auto_car(&autoCar[i]);
                 colision(playerCar,&autoCar[i]);  
             }
-            
-
+    
             //move_auto_car(&autoCar[1]);
            
             if (pause)
@@ -147,8 +151,13 @@ int main(void)
 
         //MOSTRAR A TELA
         al_flip_display();
+
         //PARA CONTROLAR O TEMPO DE EECUÇÃO
-        al_rest(0.003);
+        frame++;
+        if (limitado && (obterTempoTimer() < 1.0 / FRAMES_POR_SEGUNDO))
+        {
+            al_rest((1.0 / FRAMES_POR_SEGUNDO) - obterTempoTimer());
+        }       
     }
  
     //FECHA O JOGO AO SAIR DO LOOP PRINCIPAL

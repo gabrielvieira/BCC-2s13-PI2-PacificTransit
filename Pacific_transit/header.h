@@ -16,6 +16,10 @@
 #include <stdbool.h> 
 #include <time.h>
 
+//CONTROLE DE FRAMES POR SEGUNDO
+const int FRAMES_POR_SEGUNDO = 60;
+double tempoInicial = 0;
+
  //Define o tamanho da tela
 const int LARGURA_TELA = 800;
 const int ALTURA_TELA = 600;
