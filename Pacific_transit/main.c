@@ -1,4 +1,4 @@
-//teste novamente
+//
 //  Created by GABRIEL VIEIRA on 10/09/13.
 //  Copyright (c) 2013 GABRIEL VIEIRA. All rights reserved.
 //
@@ -150,12 +150,15 @@ int main(void)
         //MOSTRAR A TELA
         al_flip_display();
 
+        al_rest(0.010);
         //PARA CONTROLAR O TEMPO DE EECUÇÃO
+        /*
         frame++;
         if (limitado && (obterTempoTimer() < 1.0 / FRAMES_POR_SEGUNDO))
         {
             al_rest((1.0 / FRAMES_POR_SEGUNDO) - obterTempoTimer());
-        }       
+        }
+        */       
     }
  
     //FECHA O JOGO AO SAIR DO LOOP PRINCIPAL
