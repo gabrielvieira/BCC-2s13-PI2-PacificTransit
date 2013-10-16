@@ -83,6 +83,7 @@ bool inicializar()
         return false;
     }
  
+    //imagens
     carro = al_load_bitmap("img/carro.png");
     if (!carro)
     {
@@ -96,6 +97,15 @@ bool inicializar()
     if (!carro2)
     {
         fprintf(stderr, "Falha ao carregar imagem do carro2 .\n");
+        al_destroy_display(janela);
+        al_destroy_event_queue(fila_eventos);
+        return false;
+    }
+
+    beer = al_load_bitmap("img/beer.png");
+    if (!beer)
+    {
+        fprintf(stderr, "Falha ao carregar imagem da cerveja .\n");
         al_destroy_display(janela);
         al_destroy_event_queue(fila_eventos);
         return false;

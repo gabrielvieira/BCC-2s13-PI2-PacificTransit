@@ -18,16 +18,13 @@ int main(void)
     int tecla = 0;
     bool menu_ativo = true;
     bool pause = false;
-    //float telax = 50 ,
     float telay = 600;
     int frame = 0;
     bool limitado = true;
 
     //TESTE CONVERSAO DE INT PARA STRING
-    int aInt = 368;
-    char str[30];
-    sprintf(str, "%d", aInt);
-    strcat(str, " concatena");
+    char stringPontuacao[40] = "Pontuação ";
+    char str[10];
 
     // STRUCT FUNCIONANDO :)
     Car *playerCar = malloc(sizeof(Car));
@@ -50,6 +47,7 @@ int main(void)
 
     playerCar->number = 5;
     init_car(playerCar);
+    //playerCar->image.image = beer;
 
     //autoCar[0].position = 3;
     //autoCar[0].image.x = positions[3];
@@ -63,7 +61,14 @@ int main(void)
     //LOOP PRINCIPAL DO JOGO
     while (!sair)
     {
+    	//tempo para controle de fps
         iniciarTimer();
+
+        //gerar pontiação
+        strcpy(stringPontuacao,"Batidas ");
+        sprintf(str, "%d", pontuacao);
+    	strcat(stringPontuacao, str);
+
         //FILA DE EVENTOS
         while(!al_is_event_queue_empty(fila_eventos))
         {
@@ -144,21 +149,17 @@ int main(void)
             }
            
             al_draw_text(fonte2, al_map_rgb(255, 0, 0), LARGURA_TELA * 0.99, ALTURA_TELA * 0.01,
-            ALLEGRO_ALIGN_RIGHT, "Pontuação");
+            ALLEGRO_ALIGN_RIGHT, stringPontuacao);
         }
-
-        //MOSTRAR A TELA
-        al_flip_display();
-
-        al_rest(0.010);
+        
         //PARA CONTROLAR O TEMPO DE EECUÇÃO
-        /*
         frame++;
         if (limitado && (obterTempoTimer() < 1.0 / FRAMES_POR_SEGUNDO))
         {
             al_rest((1.0 / FRAMES_POR_SEGUNDO) - obterTempoTimer());
         }
-        */       
+        
+        al_flip_display();    
     }
  
     //FECHA O JOGO AO SAIR DO LOOP PRINCIPAL

@@ -39,6 +39,8 @@ float use_positions[] = {0,0,0,0,0,0};
 float car_speed[] = {5.5,4.5,3.5,3,5,4};
 int number_positions[] = {0,1,2,3,4,5};
 int pista; 
+int pontuacao = 0;
+int countBatida = 10;
 
 // Variaveis especiais do ALLEGRO 
 ALLEGRO_SAMPLE *som;
@@ -48,6 +50,7 @@ ALLEGRO_BITMAP *fundo = NULL;
 ALLEGRO_BITMAP *menu = NULL;
 ALLEGRO_BITMAP *carro = NULL;
 ALLEGRO_BITMAP *carro2 = NULL;
+ALLEGRO_BITMAP *beer = NULL;
 ALLEGRO_FONT *fonte = NULL;
 ALLEGRO_FONT *fonte2 = NULL;
 

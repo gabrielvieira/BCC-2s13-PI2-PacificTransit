@@ -9,7 +9,7 @@
 
 
 //MOVIMENTAÇÃO DOS CARROS
-int RandomInteger( int low, int high)
+int RandomInteger(int low, int high)
 {
     int k;
     double d;
@@ -25,6 +25,12 @@ void colision(Car *car_player , Car *auto_car)
     && ((auto_car->image.y - car_player->image.y) < 60 && (auto_car->image.y - car_player->image.y) > -60))
     {
         printf("Colidiu pista %d\n",auto_car->position );
+        //contar batidas
+        if(countBatida != auto_car->position)
+        {
+            countBatida = auto_car->position;
+            pontuacao++;
+        }
     }
 }
 
