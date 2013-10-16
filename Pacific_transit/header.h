@@ -38,7 +38,7 @@ float positions[] = {245,298,353,415,470,523};
 float use_positions[] = {0,0,0,0,0,0};
 float car_speed[] = {5.5,4.5,3.5,3,5,4};
 int number_positions[] = {0,1,2,3,4,5};
-int pista; 
+int pista_livre; 
 int pontuacao = 0;
 int countBatida = 10;
 
@@ -51,6 +51,7 @@ ALLEGRO_BITMAP *menu = NULL;
 ALLEGRO_BITMAP *carro = NULL;
 ALLEGRO_BITMAP *carro2 = NULL;
 ALLEGRO_BITMAP *beer = NULL;
+ALLEGRO_BITMAP *phone = NULL;
 ALLEGRO_FONT *fonte = NULL;
 ALLEGRO_FONT *fonte2 = NULL;
 
@@ -84,8 +85,9 @@ typedef struct
 		Image image;
 		int position;
 		int number;
+		float speed;
 		
-	}Plaque;
+	}Object;
 
 bool inicializar();
 

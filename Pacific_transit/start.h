@@ -111,6 +111,15 @@ bool inicializar()
         return false;
     }
 
+    phone = al_load_bitmap("img/phone.png");
+    if (!phone)
+    {
+        fprintf(stderr, "Falha ao carregar imagem da cerveja .\n");
+        al_destroy_display(janela);
+        al_destroy_event_queue(fila_eventos);
+        return false;
+    }
+
     if(!al_install_audio())
     {
      fprintf(stderr, "Falha ao inicializar o audio.\n");

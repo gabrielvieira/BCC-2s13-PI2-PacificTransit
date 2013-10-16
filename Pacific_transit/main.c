@@ -27,10 +27,13 @@ int main(void)
     char str[10];
 
     // STRUCT FUNCIONANDO :)
+    //Iniciando os carros e objetos
     Car *playerCar = malloc(sizeof(Car));
     Car *autoCar = malloc(5 * sizeof(Car));
+    Object *beer = malloc(sizeof(Object));
+    Object *phone = malloc(sizeof(Object));
     
-    //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTE
+    //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTEqqq
     if (!inicializar())
     {
         return -1;
@@ -47,6 +50,8 @@ int main(void)
 
     playerCar->number = 5;
     init_car(playerCar);
+    init_object(beer);
+    init_object(phone);
     //playerCar->image.image = beer;
 
     //autoCar[0].position = 3;
@@ -146,6 +151,8 @@ int main(void)
                     colision(playerCar,&autoCar[i]);  
                 }
                 move_player_car(tecla,playerCar,&move_permit);
+                move_beer(beer);
+                move_phone(phone);
             }
            
             al_draw_text(fonte2, al_map_rgb(255, 0, 0), LARGURA_TELA * 0.99, ALTURA_TELA * 0.01,
@@ -158,7 +165,7 @@ int main(void)
         {
             al_rest((1.0 / FRAMES_POR_SEGUNDO) - obterTempoTimer());
         }
-        
+
         al_flip_display();    
     }
  
