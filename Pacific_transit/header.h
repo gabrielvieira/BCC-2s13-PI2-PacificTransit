@@ -36,11 +36,15 @@ const float LIMITE_IMG_INF = 290;
 //vetor de posições fixas da tela
 float positions[] = {245,298,353,415,470,523};
 float use_positions[] = {0,0,0,0,0,0};
-float car_speed[] = {5.5,4.5,3.5,3,5,4};
+float use_positions_obj[] = {0,0,0,0,0,0};
+float car_speed[] = {4,4.5,3.5,3,2,4};
 int number_positions[] = {0,1,2,3,4,5};
 int pista_livre; 
 int pontuacao = 0;
 int countBatida = 10;
+bool perder = false;
+bool menu_ativo = true;
+bool reset = true;
 
 // Variaveis especiais do ALLEGRO 
 ALLEGRO_SAMPLE *som;
@@ -52,6 +56,10 @@ ALLEGRO_BITMAP *carro = NULL;
 ALLEGRO_BITMAP *carro2 = NULL;
 ALLEGRO_BITMAP *beer = NULL;
 ALLEGRO_BITMAP *phone = NULL;
+ALLEGRO_BITMAP *imgPlate1 = NULL;
+ALLEGRO_BITMAP *imgPlate2 = NULL;
+ALLEGRO_BITMAP *transparent = NULL;
+ALLEGRO_BITMAP *lost1 = NULL;
 ALLEGRO_FONT *fonte = NULL;
 ALLEGRO_FONT *fonte2 = NULL;
 
@@ -86,6 +94,7 @@ typedef struct
 		int position;
 		int number;
 		float speed;
+		int type;
 		
 	}Object;
 

@@ -5,6 +5,8 @@
 
 // Inicializar as variaveis
 
+
+
 bool inicializar()
 {
     if (!al_init())
@@ -115,6 +117,42 @@ bool inicializar()
     if (!phone)
     {
         fprintf(stderr, "Falha ao carregar imagem da cerveja .\n");
+        al_destroy_display(janela);
+        al_destroy_event_queue(fila_eventos);
+        return false;
+    }
+
+    imgPlate1 = al_load_bitmap("img/plate1.png");
+    if (!imgPlate1)
+    {
+        fprintf(stderr, "Falha ao carregar imagem das placas .\n");
+        al_destroy_display(janela);
+        al_destroy_event_queue(fila_eventos);
+        return false;
+    }
+
+    imgPlate2 = al_load_bitmap("img/plate2.png");
+    if (!imgPlate2)
+    {
+        fprintf(stderr, "Falha ao carregar imagem das placas .\n");
+        al_destroy_display(janela);
+        al_destroy_event_queue(fila_eventos);
+        return false;
+    }
+
+    transparent = al_load_bitmap("img/transparent.png");
+    if (!transparent)
+    {
+        fprintf(stderr, "Falha ao carregar imagem das placas .\n");
+        al_destroy_display(janela);
+        al_destroy_event_queue(fila_eventos);
+        return false;
+    }
+
+    lost1 = al_load_bitmap("img/lost1.jpg");
+    if (!lost1)
+    {
+        fprintf(stderr, "Falha ao carregar imagem das placas .\n");
         al_destroy_display(janela);
         al_destroy_event_queue(fila_eventos);
         return false;

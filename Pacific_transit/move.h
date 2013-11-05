@@ -3,6 +3,13 @@
 //  Copyright (c) 2013 GABRIEL VIEIRA. All rights reserved.
 //
 
+void lose()
+{
+    perder = true;
+    menu_ativo = true;
+    reset = true;
+}
+
 int RandomInteger(int low, int high)
 {
     int k;
@@ -26,8 +33,17 @@ void swap_position(Car *car)
 
 void swap_position_obj(Object *obj)
 {
+    int r2;
     int r = RandomInteger(0,5); 
+
+    while(use_positions_obj[r] != 0)
+    {
+        r = (r+1)%6; 
+    }
+
     int temp = obj->position;
+    use_positions_obj[temp] = 0;
+    use_positions_obj[r] = 1;
     //troobj posição do objro na pista_livre
     obj->position = r;
     //qqqqpista_livre = temp;
@@ -43,23 +59,38 @@ void screen_limit_down(Object *obj)
         obj->image.y = -45;
         swap_position_obj(obj);
         printf("randomizou velo %f\n",obj->speed);
+        if (obj->type == 3)
+        {
+            obj->image.image = imgPlate2;
+            countBatida = 10;
+        }
     }
+
+    //{
+      // obj->image.image = imgPlate2;
+    //}
 }
 //MOVIMENTAÇÃO DOS OBSTACULOS
 
 void init_object(Object *obj)
 {  
-    int r , temp;
+    int r ;
+    r = RandomInteger(0,5);
 
-    temp = RandomInteger(0,5);
+    while(use_positions_obj[r] != 0)
+    {
+        r = (r+1)%6; 
+    }
+
+    use_positions_obj[r] = 1;
 
     obj->image.imageX = 0;
     obj->image.imageY = 0;
-    obj->image.x = positions[temp];
+    obj->image.x = positions[r];
     obj->image.y = 0;
     //obj->image.image = beerqq;
-    obj->position = temp;
-    obj->speed = temp;
+    obj->position = r;
+    obj->speed = car_speed[r];
 
 }
 
@@ -78,21 +109,48 @@ void move_phone(Object *obj)
     al_draw_scaled_bitmap(phone,0,0,512,512, obj->image.x,obj->image.y, 45,45,0);  
 }
 
-
+void move_plate2(Object *obj)
+{
+    screen_limit_down(obj);
+    obj->image.y += obj->speed;
+    al_draw_scaled_bitmap(obj->image.image,360,240,124,124, obj->image.x,obj->image.y, 45,45,0);  
+}
 //MOVIMENTAÇÃO DOS CARROS
 
-void colision(Car *car_player , Car *auto_car)
+void colision_car(Car *car_player , Car *auto_car)
 { 
     if ((auto_car->position == car_player->position) 
     && ((auto_car->image.y - car_player->image.y) < 60 && (auto_car->image.y - car_player->image.y) > -60))
     {
         printf("Colidiu pista_livre %d\n",auto_car->position );
+        lose();
+    }
+}
+
+void colision_bad_obj(Car *car_player , Object *obj)
+{ 
+    if ((obj->position == car_player->position) 
+    && ((obj->image.y - car_player->image.y) < 45 && (obj->image.y - car_player->image.y) > -45))
+    {
+        printf("Colidiu obj %d\n",obj->position );
+        lose();
+    }
+}
+
+void colision_good_obj(Car *car_player , Object *obj)
+{ 
+    if ((obj->position == car_player->position) 
+    && ((obj->image.y - car_player->image.y) < 45 && (obj->image.y - car_player->image.y) > -45))
+    {
+        printf("Colidiu bom obj %d\n",obj->position );
         //contar batidas
-        if(countBatida != auto_car->position)
+        if(countBatida != obj->position)
         {
-            countBatida = auto_car->position;
-            pontuacao++;
+            countBatida = obj->position;
+            pontuacao += 50;
         }
+
+        obj->image.image = transparent;
     }
 }
 
