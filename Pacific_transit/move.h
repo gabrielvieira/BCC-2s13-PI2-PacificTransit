@@ -3,13 +3,6 @@
 //  Copyright (c) 2013 GABRIEL VIEIRA. All rights reserved.
 //
 
-void lose()
-{
-    perder = true;
-    menu_ativo = true;
-    reset = true;
-}
-
 int RandomInteger(int low, int high)
 {
     int k;
@@ -56,19 +49,14 @@ void screen_limit_down(Object *obj)
 {
     if (obj->image.y >= 645)
     {
+        int r = RandomInteger(0,4);
         obj->image.y = -45;
         swap_position_obj(obj);
         printf("randomizou velo %f\n",obj->speed);
-        if (obj->type == 3)
-        {
-            obj->image.image = imgPlate2;
-            countBatida = 10;
-        }
+        
+        obj->image.image = placas[r];
+        //countBatida = 10;
     }
-
-    //{
-      // obj->image.image = imgPlate2;
-    //}
 }
 //MOVIMENTAÇÃO DOS OBSTACULOS
 
@@ -109,11 +97,11 @@ void move_phone(Object *obj)
     al_draw_scaled_bitmap(phone,0,0,512,512, obj->image.x,obj->image.y, 45,45,0);  
 }
 
-void move_plate2(Object *obj)
+void move_plate(Object *obj)
 {
     screen_limit_down(obj);
     obj->image.y += obj->speed;
-    al_draw_scaled_bitmap(obj->image.image,360,240,124,124, obj->image.x,obj->image.y, 45,45,0);  
+    al_draw_scaled_bitmap(obj->image.image,0,0,150,150, obj->image.x,obj->image.y, 45,45,0);  
 }
 //MOVIMENTAÇÃO DOS CARROS
 
@@ -123,7 +111,7 @@ void colision_car(Car *car_player , Car *auto_car)
     && ((auto_car->image.y - car_player->image.y) < 60 && (auto_car->image.y - car_player->image.y) > -60))
     {
         printf("Colidiu pista_livre %d\n",auto_car->position );
-        lose();
+        
     }
 }
 
@@ -131,9 +119,20 @@ void colision_bad_obj(Car *car_player , Object *obj)
 { 
     if ((obj->position == car_player->position) 
     && ((obj->image.y - car_player->image.y) < 45 && (obj->image.y - car_player->image.y) > -45))
-    {
-        printf("Colidiu obj %d\n",obj->position );
-        lose();
+    {   
+       if (obj->type == 2)
+       {
+            printf("colidiu com a cerveja \n");
+            al_draw_bitmap(lost2, 0, 0, 0);
+            state = 4;
+       }
+       else
+       {
+            printf("colidiu com o celular\n");
+            al_draw_bitmap(lost1, 0, 0, 0);
+            state = 4;
+       }
+       
     }
 }
 
@@ -142,15 +141,24 @@ void colision_good_obj(Car *car_player , Object *obj)
     if ((obj->position == car_player->position) 
     && ((obj->image.y - car_player->image.y) < 45 && (obj->image.y - car_player->image.y) > -45))
     {
-        printf("Colidiu bom obj %d\n",obj->position );
-        //contar batidas
-        if(countBatida != obj->position)
+        if (obj->image.image != placas[4])
         {
-            countBatida = obj->position;
-            pontuacao += 50;
-        }
+             printf("Colidiu bom obj %d\n",obj->position );
+             //contar batidas
+            if(countBatida != obj->position)
+            {
+                countBatida = obj->position;
+                pontuacao += 50;
+            }
 
-        obj->image.image = transparent;
+            obj->image.image = transparent;
+        }
+        else
+        {
+            al_draw_bitmap(perdeuFalsa, 0, 0, 0);
+            state = 4;
+        }
+       
     }
 }
 

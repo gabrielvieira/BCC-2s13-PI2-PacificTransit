@@ -42,8 +42,7 @@ int number_positions[] = {0,1,2,3,4,5};
 int pista_livre; 
 int pontuacao = 0;
 int countBatida = 10;
-bool perder = false;
-bool menu_ativo = true;
+int state = 0;
 bool reset = true;
 
 // Variaveis especiais do ALLEGRO 
@@ -52,18 +51,27 @@ ALLEGRO_DISPLAY *janela = NULL;
 ALLEGRO_EVENT_QUEUE *fila_eventos = NULL;
 ALLEGRO_BITMAP *fundo = NULL;
 ALLEGRO_BITMAP *menu = NULL;
+ALLEGRO_BITMAP *ex1 = NULL;
+ALLEGRO_BITMAP *ex2 = NULL;
+ALLEGRO_BITMAP *final = NULL;
+ALLEGRO_BITMAP *perdeuFalsa = NULL;
 ALLEGRO_BITMAP *carro = NULL;
 ALLEGRO_BITMAP *carro2 = NULL;
 ALLEGRO_BITMAP *beer = NULL;
 ALLEGRO_BITMAP *phone = NULL;
 ALLEGRO_BITMAP *imgPlate1 = NULL;
 ALLEGRO_BITMAP *imgPlate2 = NULL;
+ALLEGRO_BITMAP *imgPlate3 = NULL;
+ALLEGRO_BITMAP *imgPlate4 = NULL;
+ALLEGRO_BITMAP *imgFake1 = NULL;
 ALLEGRO_BITMAP *transparent = NULL;
 ALLEGRO_BITMAP *lost1 = NULL;
+ALLEGRO_BITMAP *lost2 = NULL;
 ALLEGRO_FONT *fonte = NULL;
 ALLEGRO_FONT *fonte2 = NULL;
 
-//struct para os carros
+
+//struct para os carrosqq
 typedef struct
 	{
 		ALLEGRO_BITMAP *image;
@@ -98,6 +106,7 @@ typedef struct
 		
 	}Object;
 
+	ALLEGRO_BITMAP* placas[10];
 bool inicializar();
 
 

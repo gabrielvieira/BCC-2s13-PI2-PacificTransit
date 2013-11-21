@@ -1,5 +1,5 @@
 //
-//  Created by GABRIEL VIEIRA on 10/09/13.
+//  Created by GABRIEL VIEIRA on 10/09/13.qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
 //  Copyright (c) 2013 GABRIEL VIEIRA. All rights reserved.
 //
 
@@ -8,19 +8,25 @@
 #include "move.h" 
 #include "tempo.h"
 
+//
+
 int main(void)
 {
+    //placas[0].image = imgPlate3;
+
     srand(time(NULL));
     //DECLARAÇÃO DE VARIAVEIS
     bool sair = false;
     int i;
     bool move_permit = true;
     int tecla = 0;
+    int testeTime = 0;
     
     bool pause = false;
     float telay = 600;
     int frame = 0;
     bool limitado = true;
+   
 
     //TESTE CONVERSAO DE INT PARA STRING
     char stringPontuacao[40] = "Pontuação ";
@@ -29,9 +35,10 @@ int main(void)
     // STRUCT FUNCIONANDO :)
     //Iniciando os carros e objetos
     Car *playerCar = malloc(sizeof(Car));
-    Car *autoCar = malloc(5 * sizeof(Car));
+   // Car *autoCar = malloc(5 * sizeof(Car));
     Object *beer = malloc(sizeof(Object));
     Object *phone = malloc(sizeof(Object));
+    Object *plate1 = malloc(sizeof(Object));
     Object *plate2 = malloc(sizeof(Object));
     
     //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTEqqq
@@ -81,13 +88,14 @@ int main(void)
                     tecla = 4;                           
                     break;
                 case ALLEGRO_KEY_ENTER:
-                    menu_ativo = false;                          
+                    tecla = 5;  
+                   // menu_ativo = false;                          
                     break;
                 case ALLEGRO_KEY_M:
-                    menu_ativo = true;                          
+                    //menu_ativo = true;                          
                     break;
                 case ALLEGRO_KEY_R:
-                    perder = false; 
+                    //perder = false; 
                     //reset = false;                         
                     break;      
                 case ALLEGRO_KEY_ESCAPE:
@@ -117,11 +125,14 @@ int main(void)
         }
 
         //PROCESSAMENTO DAS ENTRADAS RECEBIDAS PELOS USUARIOS
-        if (menu_ativo)
+        if (state == 0)
         {
 
+            al_draw_bitmap(menu, 0, 0, 0);
             if (reset)
             {
+                int r1 = RandomInteger(0,4);
+                int r2 = RandomInteger(0,4);
 
                 for (i = 0; i < 6; ++i)
                 {
@@ -129,40 +140,59 @@ int main(void)
                     use_positions_obj[i] = 0;
                 }
 
-                for (i = 0; i < 5; i++)
-                {
-                    autoCar[i].number = i;
-                    init_car(&autoCar[i]);
-                }
-
                 playerCar->number = 5;
                 init_car(playerCar);
                 init_object(beer);
                 init_object(phone);
+
+                init_object(plate1);
                 init_object(plate2);
                 
                 phone->type = 1;
                 beer->type = 2;
 
-                plate2->image.image = imgPlate2;
+                plate1->image.image = placas[r1];
+                plate1->type = 3;
+
+                plate2->image.image = placas[r2];
                 plate2->type = 3;
 
                 reset = false;
-                 countBatida = 10;
+                countBatida = 10;
                 pontuacao = 0;
             }
 
-            if (perder)
+            if (tecla == 5)
             {
-                al_draw_bitmap(lost1, 0, 0, 0);
-            }
-            else
-            {
-                al_draw_bitmap(menu, 0, 0, 0);
+                state++;
             }
             
+            tecla = 0;
         }
-        else
+        
+        if (state == 1)
+        {
+            al_draw_bitmap(ex1, 0, 0, 0);
+            if (tecla == 5)
+            {
+                state++;
+            }
+            
+            tecla = 0;
+        }    
+
+        if (state == 2)
+        {
+            al_draw_bitmap(ex2, 0, 0, 0);
+            if (tecla == 5)
+            {
+                state++;
+            }
+            
+            tecla = 0;
+        }   
+
+        if(state == 3)
         {
             if (pause)
             {
@@ -173,23 +203,45 @@ int main(void)
             else
             {
                 move_screen(&telay);
-                for (i = 0; i < 5; i++)
-                {
-                    move_auto_car(&autoCar[i]);
-                    colision_car(playerCar,&autoCar[i]);
-                    colision_bad_obj(playerCar,beer);
-                    colision_bad_obj(playerCar,phone);
-                    colision_good_obj(playerCar,plate2);
-
-                }
                 move_player_car(tecla,playerCar,&move_permit);
+                
                 move_beer(beer);
                 move_phone(phone);
-                move_plate2(plate2);
+
+                move_plate(plate1);
+                move_plate(plate2);
+
+                colision_bad_obj(playerCar,beer);
+                colision_bad_obj(playerCar,phone);
+                
+                colision_good_obj(playerCar,plate1);
+                colision_good_obj(playerCar,plate2);
             }
            
             al_draw_text(fonte2, al_map_rgb(255, 0, 0), LARGURA_TELA * 0.99, ALTURA_TELA * 0.01,
             ALLEGRO_ALIGN_RIGHT, stringPontuacao);
+        }
+
+        if (state == 4)
+        {
+            if (tecla == 5)
+            {
+               state++;
+            }
+
+            tecla = 0;
+        }
+
+         if (state == 5)
+        {
+            al_draw_bitmap(final, 0, 0, 0);
+            if (tecla == 5)
+            {
+               state = 0;
+               reset = true;
+            }
+
+            tecla = 0;
         }
         
         //PARA CONTROLAR O TEMPO DE EECUÇÃO
@@ -198,7 +250,6 @@ int main(void)
         {
             al_rest((1.0 / FRAMES_POR_SEGUNDO) - obterTempoTimer());
         }
-
         al_flip_display();    
     }
  
