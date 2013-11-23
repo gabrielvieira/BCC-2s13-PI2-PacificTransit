@@ -16,9 +16,10 @@
 #include <stdbool.h> 
 #include <time.h>
 
+
 //CONTROLE DE FRAMES POR SEGUNDO
 const int FRAMES_POR_SEGUNDO = 60;
-double tempoInicial = 0;
+//double tempoInicial = 0;
 
  //Define o tamanho da tela
 const int LARGURA_TELA = 800;
@@ -51,6 +52,7 @@ ALLEGRO_DISPLAY *janela = NULL;
 ALLEGRO_EVENT_QUEUE *fila_eventos = NULL;
 ALLEGRO_BITMAP *fundo = NULL;
 ALLEGRO_BITMAP *menu = NULL;
+//ALLEGRO_BITMAP *preMenu = NULL;
 ALLEGRO_BITMAP *ex1 = NULL;
 ALLEGRO_BITMAP *ex2 = NULL;
 ALLEGRO_BITMAP *final = NULL;
@@ -107,6 +109,8 @@ typedef struct
 	}Object;
 
 	ALLEGRO_BITMAP* placas[10];
+	ALLEGRO_BITMAP* placas_sig[10];
+
 bool inicializar();
 
 

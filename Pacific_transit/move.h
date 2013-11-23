@@ -52,9 +52,10 @@ void screen_limit_down(Object *obj)
         int r = RandomInteger(0,4);
         obj->image.y = -45;
         swap_position_obj(obj);
-        printf("randomizou velo %f\n",obj->speed);
-        
+        //printf("randomizou velo %f\n",obj->speed);
+        //printf("placa %d\n",r );
         obj->image.image = placas[r];
+
         //countBatida = 10;
     }
 }
@@ -122,13 +123,13 @@ void colision_bad_obj(Car *car_player , Object *obj)
     {   
        if (obj->type == 2)
        {
-            printf("colidiu com a cerveja \n");
+            //printf("colidiu com a cerveja \n");
             al_draw_bitmap(lost2, 0, 0, 0);
             state = 4;
        }
        else
        {
-            printf("colidiu com o celular\n");
+           //printf("colidiu com o celular\n");
             al_draw_bitmap(lost1, 0, 0, 0);
             state = 4;
        }
@@ -138,12 +139,25 @@ void colision_bad_obj(Car *car_player , Object *obj)
 
 void colision_good_obj(Car *car_player , Object *obj)
 { 
+    int perder = 0;
+    int i;
+
     if ((obj->position == car_player->position) 
     && ((obj->image.y - car_player->image.y) < 45 && (obj->image.y - car_player->image.y) > -45))
     {
-        if (obj->image.image != placas[4])
+        for (i = 4; i < 10; ++i)
         {
-             printf("Colidiu bom obj %d\n",obj->position );
+            printf("passei\n");
+            if (obj->image.image == placas[i])
+            {
+                perder = 1;
+
+            }
+        }
+
+        if (!perder)
+        {
+             //printf("Colidiu bom obj %d\n",obj->position );
              //contar batidas
             if(countBatida != obj->position)
             {
@@ -156,6 +170,7 @@ void colision_good_obj(Car *car_player , Object *obj)
         else
         {
             al_draw_bitmap(perdeuFalsa, 0, 0, 0);
+            al_draw_bitmap(obj->image.image, 330, 300, 0);
             state = 4;
         }
        
@@ -168,7 +183,7 @@ void screen_limit_up(Car *car)
     {
         car->image.y = 600;
         swap_position(car);
-        printf("randomizou velo %f\n",car->speed);
+        //printf("randomizou velo %f\n",car->speed);
     }
 }
 
@@ -200,7 +215,7 @@ void init_car(Car *car)
     car->speed = car_speed[car->position];
 
     use_positions[temp] = 1;
-    printf("%d\n",temp );
+   // printf("%d\n",temp );
 
     if (car->number == 5)
     {

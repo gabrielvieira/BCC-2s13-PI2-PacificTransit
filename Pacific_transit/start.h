@@ -19,25 +19,27 @@ char* devolveCaminho()
     strcpy(nomeImagem,"placa");
 
     sprintf(str, "%d", r);
-    strcat(nomeImagem, str);
+    //sem numero por enquanto ja que a quantidade de imagens é pequena
+    //strcat(nomeImagem, str);
     strcat(caminho, nomeImagem);
-    strcat(caminho, ".png");
+   //strcat(caminho, ".png");
 
     strcpy(retorno,caminho);
 
-    printf("%s\n", caminho);
+    //printf("%s\n", caminho);
 
     return retorno;
 }
 
 bool inicializar()
 {
+    
     if (!al_init())
     {
         fprintf(stderr, "Falha ao inicializar a Allegro.\n");
         return false;
-    }
- 
+    }   
+
     al_init_font_addon();
  
     if (!al_init_ttf_addon())
@@ -107,7 +109,18 @@ bool inicializar()
         al_destroy_event_queue(fila_eventos);
         return false;
     }
- 
+
+    /*
+    preMenu = al_load_bitmap("img/preMenu.jpg");
+    if (!preMenu)
+    {
+        fprintf(stderr, "Falha ao carregar imagem de menu.\n");
+        al_destroy_display(janela);
+        al_destroy_event_queue(fila_eventos);
+        return false;
+    }
+    */
+
     //imagens
     carro = al_load_bitmap("img/carro.png");
     if (!carro)
@@ -237,18 +250,46 @@ bool inicializar()
         
 
     //ALOCAR IMAGENS DAS PLACAS
-    //GAMBIARRAS
     
     //funcao que devolve um caminho aleatorio 
     //de caminho de imagem , buscando uma futura expanção de imagens
-    //devolveCaminho();
+    
+    int i;
+    for (i = 0; i < 4; ++i)
+    {
+        char num[2];
+        sprintf(num, "%d", i);
+        
+        char* retorno = devolveCaminho();
+        strcat(retorno,num);
 
+        char *caminhoPlaca = malloc(30*sizeof(char));
+        char *caminhoSig = malloc(30*sizeof(char));
+
+        strcpy(caminhoPlaca,retorno);
+        strcpy(caminhoSig,retorno);
+
+        strcat(caminhoPlaca,".png");
+        strcat(caminhoSig,"sig.png");
+
+        printf("%s\n", caminhoPlaca);
+        printf("%s\n", caminhoSig);
+
+        placas_sig[i] = al_load_bitmap(caminhoSig);
+        placas[i] = al_load_bitmap(caminhoPlaca);
+
+        free(retorno);
+        free(caminhoPlaca);
+        free(caminhoSig);
+    }
+    
+    /*
     imgPlate1 = al_load_bitmap("img/placas/placa1.png");
     if (!imgPlate1)
     {
         fprintf(stderr, "Falha ao carregar imagem das placas .\n");
         al_destroy_display(janela);
-        al_destroy_event_queue(fila_eventos);
+        al_destroy_evqqQQQQQQqqqqqqqqqqqqqqent_queue(fila_eventos);
         return false;
     }
 
@@ -287,15 +328,20 @@ bool inicializar()
         al_destroy_event_queue(fila_eventos);
         return false;
     }
-
+    */
     
 
-    placas[0] = imgPlate1;
-    placas[1] = imgPlate2;
-    placas[2] = imgPlate3;
-    placas[3] = imgPlate4;
-    placas[4] = imgFake1;
+    //RANDOMIZANDO TUDO
+
+    /*
+    placas[0] = al_load_bitmap("img/placas/placa0.png");
+    placas[1] = al_load_bitmap("img/placas/placa1.png");
+    placas[2] = al_load_bitmap("img/placas/placa2.png");
+    placas[3] = al_load_bitmap("img/placas/placa3.png");
+*/
+    placas[4] = al_load_bitmap("img/placas/fake1.png");
     
+
     al_register_event_source(fila_eventos, al_get_keyboard_event_source());
     al_register_event_source(fila_eventos, al_get_display_event_source(janela));
 

@@ -14,6 +14,7 @@ int main(void)
 {
     //placas[0].image = imgPlate3;
 
+    
     srand(time(NULL));
     //DECLARAÇÃO DE VARIAVEIS
     bool sair = false;
@@ -26,7 +27,8 @@ int main(void)
     float telay = 600;
     int frame = 0;
     bool limitado = true;
-   
+    
+     
 
     //TESTE CONVERSAO DE INT PARA STRING
     char stringPontuacao[40] = "Pontuação ";
@@ -42,14 +44,18 @@ int main(void)
     Object *plate2 = malloc(sizeof(Object));
     
     //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTEqqq
+    //al_draw_bitmap(preMenu, 0, 0, 0);
+    //al_flip_display(); 
+
     if (!inicializar())
     {
         return -1;
     }
 
+     
     //DESENHA IMAGEM DE FUNDO
     al_draw_bitmap(menu, 0, 0, 0);
-
+    al_flip_display();
     //SOM DO JOGO
     al_play_sample(som, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
 
@@ -91,8 +97,8 @@ int main(void)
                     tecla = 5;  
                    // menu_ativo = false;                          
                     break;
-                case ALLEGRO_KEY_M:
-                    //menu_ativo = true;                          
+                case ALLEGRO_KEY_BACKSPACE:
+                    tecla = 6;                        
                     break;
                 case ALLEGRO_KEY_R:
                     //perder = false; 
@@ -177,6 +183,11 @@ int main(void)
             {
                 state++;
             }
+
+            if (tecla == 6)
+            {
+                state--;
+            }
             
             tecla = 0;
         }    
@@ -189,6 +200,11 @@ int main(void)
                 state++;
             }
             
+            if (tecla == 6)
+            {
+                state--;
+            }
+
             tecla = 0;
         }   
 
@@ -234,7 +250,16 @@ int main(void)
 
          if (state == 5)
         {
+            float x1 = 120;
+            float x2 = 480;
+            float y1 = 110;
+            float y2 = 350;
+
             al_draw_bitmap(final, 0, 0, 0);
+            al_draw_bitmap(placas_sig[0], x1, y1, 0);
+            al_draw_bitmap(placas_sig[1], x2, y1, 0);
+            al_draw_bitmap(placas_sig[2], x1, y2, 0);
+            al_draw_bitmap(placas_sig[3], x2, y2, 0);
             if (tecla == 5)
             {
                state = 0;
