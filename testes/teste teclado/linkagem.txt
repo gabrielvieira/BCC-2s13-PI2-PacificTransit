@@ -1,1 +1,0 @@
- -lallegro -lallegro_font -lallegro_ttf -lallegro_image
