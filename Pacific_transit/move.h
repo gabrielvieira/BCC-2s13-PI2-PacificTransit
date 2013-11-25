@@ -26,7 +26,8 @@ void swap_position(Car *car)
 
 void swap_position_obj(Object *obj)
 {
-    int r2;
+    int temp = obj->position;
+    use_positions_obj[temp] = 0;
     int r = RandomInteger(0,5); 
 
     while(use_positions_obj[r] != 0)
@@ -34,8 +35,7 @@ void swap_position_obj(Object *obj)
         r = (r+1)%6; 
     }
 
-    int temp = obj->position;
-    use_positions_obj[temp] = 0;
+    
     use_positions_obj[r] = 1;
     //troobj posição do objro na pista_livre
     obj->position = r;
@@ -49,7 +49,7 @@ void screen_limit_down(Object *obj)
 {
     if (obj->image.y >= 645)
     {
-        int r = RandomInteger(0,4);
+        int r = RandomInteger(0,7);
         obj->image.y = -45;
         swap_position_obj(obj);
         //printf("randomizou velo %f\n",obj->speed);
@@ -145,9 +145,9 @@ void colision_good_obj(Car *car_player , Object *obj)
     if ((obj->position == car_player->position) 
     && ((obj->image.y - car_player->image.y) < 45 && (obj->image.y - car_player->image.y) > -45))
     {
-        for (i = 4; i < 10; ++i)
+        for (i = 4; i < 8; ++i)
         {
-            printf("passei\n");
+            //printf("passei\n");
             if (obj->image.image == placas[i])
             {
                 perder = 1;
@@ -214,24 +214,23 @@ void init_car(Car *car)
     car->position = temp;
     car->speed = car_speed[car->position];
 
-    use_positions[temp] = 1;
+   // use_positions[temp] = 1;
    // printf("%d\n",temp );
 
-    if (car->number == 5)
-    {
-        pista_livre = car->position;
-    }
+    //if (car->number == 5)
+   // {
+       // pista_livre = car->position;
+   // }
 }
 
-void move_screen(float *telay)
+void move_screen(float *telay, float speed)
 {
-    *telay -= 4;
+    *telay = *telay - speed;
 
-    if (*telay == 0)
+    if (*telay <= 0)
     {
         *telay = 600;
     }
-
     al_draw_bitmap_region(fundo,0,*telay, LARGURA_TELA, ALTURA_TELA ,0,0,0);
 }
 
@@ -284,3 +283,95 @@ void move_player_car(int tecla,Car *car,bool *move_permit)
     al_draw_bitmap_region(car->image.image, car->image.imageX, car->image.imageY,
      car->image.width , car->image.height , car->image.x ,car->image.y ,0);
 }
+
+
+char* devolveCaminho()
+{
+    char *retorno = malloc(30*sizeof(char));
+    char nomeImagem[15];
+    char caminho[15];
+    //int r = RandomInteger(0,10);
+    //char str[10];
+
+    strcpy(caminho,"img/placas/");
+    strcpy(nomeImagem,"placa");
+
+    //sprintf(str, "%d", r);
+    //sem numero por enquanto ja que a quantidade de imagens é pequenaqq
+    //strcat(nomeImagem, str);
+    strcat(caminho, nomeImagem);
+   //strcat(caminho, ".png");
+
+    strcpy(retorno,caminho);
+
+    //printf("%s\n", caminho);
+
+    return retorno;
+}
+
+int* four_random_numbers()
+{
+    int* random_numbers = malloc(4*sizeof(int));
+
+    random_numbers[0] = RandomInteger(0,10);
+
+   random_numbers[1] = random_numbers[0];
+    while(random_numbers[1] == random_numbers[0])
+        random_numbers[1] = RandomInteger(0,10);
+    
+    random_numbers[2] = random_numbers[0];
+    while(random_numbers[2] == random_numbers[0])
+        random_numbers[2] = RandomInteger(0,10);
+
+    random_numbers[3] = random_numbers[1];
+    while(random_numbers[3] == random_numbers[1])
+        random_numbers[3] = RandomInteger(0,10);
+
+    while(random_numbers[3] == random_numbers[2])
+        random_numbers[3] = RandomInteger(0,10);
+
+    return random_numbers;
+}
+
+    void aloca_palcas(int* random_numbers)
+    {
+        int i;
+        for (i = 0; i < 4; ++i)
+        {
+            char num[2];
+            sprintf(num, "%d", random_numbers[i]);
+            
+            char* retorno = devolveCaminho();
+            strcat(retorno,num);
+
+            char *caminhoPlaca = malloc(30*sizeof(char));
+            char *caminhoSig = malloc(30*sizeof(char));
+
+            strcpy(caminhoPlaca,retorno);
+            strcpy(caminhoSig,retorno);
+
+            strcat(caminhoPlaca,".png");
+            strcat(caminhoSig,"sig.png");
+
+            printf("%s\n", caminhoPlaca);
+            printf("%s\n", caminhoSig);
+
+            placas_sig[i] = al_load_bitmap(caminhoSig);
+            placas[i] = al_load_bitmap(caminhoPlaca);
+
+            free(retorno);
+            free(caminhoPlaca);
+            free(caminhoSig);
+        }
+    }
+
+    void desaloca_placas(ALLEGRO_BITMAP** placas)
+    {
+        int i;
+
+        for (i = 0; i < 4; ++i)
+        {
+             al_destroy_bitmap(placas[i]);
+        }
+       
+    }

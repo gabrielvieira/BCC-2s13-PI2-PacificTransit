@@ -7,29 +7,10 @@
 
 int RandomInteger(int low, int high);
 
-char* devolveCaminho()
-{
-    char *retorno = malloc(30*sizeof(char));
-    char nomeImagem[15];
-    char caminho[15];
-    int r = RandomInteger(1,4);
-    char str[10];
+char* devolveCaminho();
+int *four_random_numbers();
+void aloca_palcas(int* random_numbers);
 
-    strcpy(caminho,"img/placas/");
-    strcpy(nomeImagem,"placa");
-
-    sprintf(str, "%d", r);
-    //sem numero por enquanto ja que a quantidade de imagens é pequena
-    //strcat(nomeImagem, str);
-    strcat(caminho, nomeImagem);
-   //strcat(caminho, ".png");
-
-    strcpy(retorno,caminho);
-
-    //printf("%s\n", caminho);
-
-    return retorno;
-}
 
 bool inicializar()
 {
@@ -253,37 +234,11 @@ bool inicializar()
     
     //funcao que devolve um caminho aleatorio 
     //de caminho de imagem , buscando uma futura expanção de imagens
-    
-    int i;
-    for (i = 0; i < 4; ++i)
-    {
-        char num[2];
-        sprintf(num, "%d", i);
-        
-        char* retorno = devolveCaminho();
-        strcat(retorno,num);
-
-        char *caminhoPlaca = malloc(30*sizeof(char));
-        char *caminhoSig = malloc(30*sizeof(char));
-
-        strcpy(caminhoPlaca,retorno);
-        strcpy(caminhoSig,retorno);
-
-        strcat(caminhoPlaca,".png");
-        strcat(caminhoSig,"sig.png");
-
-        printf("%s\n", caminhoPlaca);
-        printf("%s\n", caminhoSig);
-
-        placas_sig[i] = al_load_bitmap(caminhoSig);
-        placas[i] = al_load_bitmap(caminhoPlaca);
-
-        free(retorno);
-        free(caminhoPlaca);
-        free(caminhoSig);
-    }
-    
     /*
+    int *random_numbers = four_random_numbers();
+    aloca_palcas(random_numbers);
+    free(random_numbers);
+    
     imgPlate1 = al_load_bitmap("img/placas/placa1.png");
     if (!imgPlate1)
     {
@@ -340,6 +295,9 @@ bool inicializar()
     placas[3] = al_load_bitmap("img/placas/placa3.png");
 */
     placas[4] = al_load_bitmap("img/placas/fake1.png");
+    placas[5] = al_load_bitmap("img/placas/fake2.png");
+    placas[6] = al_load_bitmap("img/placas/fake3.png");
+    placas[7] = al_load_bitmap("img/placas/fake4.png");
     
 
     al_register_event_source(fila_eventos, al_get_keyboard_event_source());

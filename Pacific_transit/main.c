@@ -21,12 +21,14 @@ int main(void)
     int i;
     bool move_permit = true;
     int tecla = 0;
-    int testeTime = 0;
-    
     bool pause = false;
     float telay = 600;
     int frame = 0;
     bool limitado = true;
+    bool up_speed1 = true;
+    bool up_speed2 = true;
+    bool up_speed3 = true;
+    float screen_speed = 4;
     
      
 
@@ -42,6 +44,8 @@ int main(void)
     Object *phone = malloc(sizeof(Object));
     Object *plate1 = malloc(sizeof(Object));
     Object *plate2 = malloc(sizeof(Object));
+    Object *plate3 = malloc(sizeof(Object));
+    Object *plate4 = malloc(sizeof(Object));
     
     //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTEqqq
     //al_draw_bitmap(preMenu, 0, 0, 0);
@@ -69,6 +73,38 @@ int main(void)
         strcpy(stringPontuacao,"Pontuação ");
         sprintf(str, "%d", pontuacao);
     	strcat(stringPontuacao, str);
+
+        if ((pontuacao > 1000 && pontuacao < 1100) && up_speed1 == true) 
+        {
+            screen_speed += 2;
+            for (i = 0; i < 6; ++i)
+            {
+                car_speed[i]+= 2;
+            }
+            up_speed1 = false;
+
+        }
+
+        if ((pontuacao > 1500 && pontuacao < 1600) && up_speed2 == true) 
+        {
+            screen_speed += 2;
+            for (i = 0; i < 6; ++i)
+            {
+                car_speed[i]+= 2;
+            }
+            up_speed2 = false;
+        }
+
+        if ((pontuacao > 2000 && pontuacao < 2100) && up_speed3 == true) 
+        {
+            screen_speed += 2;
+            for (i = 0; i < 6; ++i)
+            {
+                car_speed[i]+= 2;
+            }
+            up_speed3 = false;
+        }
+        
 
         //FILA DE EVENTOS
         while(!al_is_event_queue_empty(fila_eventos))
@@ -137,8 +173,47 @@ int main(void)
             al_draw_bitmap(menu, 0, 0, 0);
             if (reset)
             {
-                int r1 = RandomInteger(0,4);
-                int r2 = RandomInteger(0,4);
+                //ALOCANDO RANDOMICAMENTE AS PLACAS
+                desaloca_placas(placas);
+                int *random_numbers = four_random_numbers();
+                aloca_palcas(random_numbers);
+                free(random_numbers);
+
+                int r1 = RandomInteger(0,7);
+                int r2 = RandomInteger(0,7);
+                int r3 = RandomInteger(0,7);
+                int r4 = RandomInteger(0,7);
+
+                if (up_speed1 == false)
+                {
+                    screen_speed -=2;
+                    
+                    for (i = 0; i < 6; ++i)
+                    {
+                        car_speed[i]-= 2;
+                    }
+                    up_speed1 = true;
+                }
+
+                if (up_speed2 == false)
+                {
+                    screen_speed -=2;
+                    for (i = 0; i < 6; ++i)
+                    {
+                        car_speed[i]-= 2;
+                    }
+                    up_speed2 = true;
+                }
+
+                if (up_speed3 == false)
+                {
+                    screen_speed -=2;
+                    for (i = 0; i < 6; ++i)
+                    {
+                        car_speed[i]-= 2;
+                    }
+                    up_speed3 = true;
+                }
 
                 for (i = 0; i < 6; ++i)
                 {
@@ -153,6 +228,8 @@ int main(void)
 
                 init_object(plate1);
                 init_object(plate2);
+                init_object(plate3);
+                init_object(plate4);
                 
                 phone->type = 1;
                 beer->type = 2;
@@ -163,9 +240,19 @@ int main(void)
                 plate2->image.image = placas[r2];
                 plate2->type = 3;
 
+                plate3->image.image = placas[r3];
+                plate3->type = 3;
+
+                plate4->image.image = placas[r4];
+                plate4->type = 3;
+
                 reset = false;
                 countBatida = 10;
                 pontuacao = 0;
+
+
+
+               
             }
 
             if (tecla == 5)
@@ -218,7 +305,7 @@ int main(void)
             }    
             else
             {
-                move_screen(&telay);
+                move_screen(&telay,screen_speed);
                 move_player_car(tecla,playerCar,&move_permit);
                 
                 move_beer(beer);
@@ -226,14 +313,18 @@ int main(void)
 
                 move_plate(plate1);
                 move_plate(plate2);
+                move_plate(plate3);
+                move_plate(plate4);
 
                 colision_bad_obj(playerCar,beer);
                 colision_bad_obj(playerCar,phone);
                 
                 colision_good_obj(playerCar,plate1);
                 colision_good_obj(playerCar,plate2);
+                colision_good_obj(playerCar,plate3);
+                colision_good_obj(playerCar,plate4);
             }
-           
+        
             al_draw_text(fonte2, al_map_rgb(255, 0, 0), LARGURA_TELA * 0.99, ALTURA_TELA * 0.01,
             ALLEGRO_ALIGN_RIGHT, stringPontuacao);
         }
