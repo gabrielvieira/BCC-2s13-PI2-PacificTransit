@@ -3,6 +3,7 @@
 //  Copyright (c) 2013 GABRIEL VIEIRA. All rights reserved.
 //
 
+//HEADERS PARA COMPILAÇÃO
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h> 
@@ -19,7 +20,7 @@
 
 //CONTROLE DE FRAMES POR SEGUNDO
 const int FRAMES_POR_SEGUNDO = 60;
-//double tempoInicial = 0;
+
 
  //Define o tamanho da tela
 const int LARGURA_TELA = 800;
@@ -36,8 +37,10 @@ const float LIMITE_IMG_INF = 290;
 
 //vetor de posições fixas da tela
 float positions[] = {245,298,353,415,470,523};
+//VETOR DE POSIÇÕES OCUPADAS
 float use_positions[] = {0,0,0,0,0,0};
 float use_positions_obj[] = {0,0,0,0,0,0};
+//VELOCIDADES DOS CARROS E OBJETOS
 float car_speed[] = {4,4.5,3.5,3,2,4};
 int number_positions[] = {0,1,2,3,4,5};
 int pista_livre; 
@@ -47,12 +50,12 @@ int state = 0;
 bool reset = true;
 
 // Variaveis especiais do ALLEGRO 
+//IMAGENS , SONS E FONTES
 ALLEGRO_SAMPLE *som;
 ALLEGRO_DISPLAY *janela = NULL;
 ALLEGRO_EVENT_QUEUE *fila_eventos = NULL;
 ALLEGRO_BITMAP *fundo = NULL;
 ALLEGRO_BITMAP *menu = NULL;
-//ALLEGRO_BITMAP *preMenu = NULL;
 ALLEGRO_BITMAP *ex1 = NULL;
 ALLEGRO_BITMAP *ex2 = NULL;
 ALLEGRO_BITMAP *final = NULL;
@@ -73,7 +76,9 @@ ALLEGRO_FONT *fonte = NULL;
 ALLEGRO_FONT *fonte2 = NULL;
 
 
-//struct para os carrosqq
+//struct para os carros E PLACAS
+
+//STRUCT DE IMAGEM
 typedef struct
 	{
 		ALLEGRO_BITMAP *image;
@@ -89,6 +94,7 @@ typedef struct
 
 	}Image;
 	
+//STRUCT DE CARRO	
 	typedef struct
 	{
 		Image image;
@@ -98,6 +104,7 @@ typedef struct
 		
 	}Car;
 
+//STRUCT OBJETOS
 	typedef struct
 	{
 		Image image;
@@ -108,6 +115,7 @@ typedef struct
 		
 	}Object;
 
+//VETOR DE PLACAS E SEUS SIGNIFICADOS
 	ALLEGRO_BITMAP* placas[10];
 	ALLEGRO_BITMAP* placas_sig[10];
 

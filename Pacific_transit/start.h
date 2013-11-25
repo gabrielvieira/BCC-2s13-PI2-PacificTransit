@@ -3,7 +3,7 @@
 //  Copyright (c) 2013 GABRIEL VIEIRA. All rights reserved.
 //
 
-// Inicializar as variaveis
+
 
 int RandomInteger(int low, int high);
 
@@ -11,7 +11,7 @@ char* devolveCaminho();
 int *four_random_numbers();
 void aloca_palcas(int* random_numbers);
 
-
+// Inicializar as variaveis
 bool inicializar()
 {
     
@@ -90,17 +90,6 @@ bool inicializar()
         al_destroy_event_queue(fila_eventos);
         return false;
     }
-
-    /*
-    preMenu = al_load_bitmap("img/preMenu.jpg");
-    if (!preMenu)
-    {
-        fprintf(stderr, "Falha ao carregar imagem de menu.\n");
-        al_destroy_display(janela);
-        al_destroy_event_queue(fila_eventos);
-        return false;
-    }
-    */
 
     //imagens
     carro = al_load_bitmap("img/carro.png");
@@ -228,72 +217,8 @@ bool inicializar()
         al_destroy_event_queue(fila_eventos);
         return false;
     }
-        
-
-    //ALOCAR IMAGENS DAS PLACAS
-    
-    //funcao que devolve um caminho aleatorio 
-    //de caminho de imagem , buscando uma futura expanção de imagens
-    /*
-    int *random_numbers = four_random_numbers();
-    aloca_palcas(random_numbers);
-    free(random_numbers);
-    
-    imgPlate1 = al_load_bitmap("img/placas/placa1.png");
-    if (!imgPlate1)
-    {
-        fprintf(stderr, "Falha ao carregar imagem das placas .\n");
-        al_destroy_display(janela);
-        al_destroy_evqqQQQQQQqqqqqqqqqqqqqqent_queue(fila_eventos);
-        return false;
-    }
-
-    imgPlate2 = al_load_bitmap("img/placas/placa2.png");
-    if (!imgPlate2)
-    {
-        fprintf(stderr, "Falha ao carregar imagem das placas .\n");
-        al_destroy_display(janela);
-        al_destroy_event_queue(fila_eventos);
-        return false;
-    }
-
-    imgPlate3 = al_load_bitmap("img/placas/placa3.png");
-    if (!imgPlate2)
-    {
-        fprintf(stderr, "Falha ao carregar imagem das placas .\n");
-        al_destroy_display(janela);
-        al_destroy_event_queue(fila_eventos);
-        return false;
-    }
-
-    imgPlate4 = al_load_bitmap("img/placas/placa4.png");
-    if (!imgPlate2)
-    {
-        fprintf(stderr, "Falha ao carregar imagem das placas .\n");
-        al_destroy_display(janela);
-        al_destroy_event_queue(fila_eventos);
-        return false;
-    }
-
-    imgFake1 = al_load_bitmap("img/placas/fake1.png");
-    if (!imgFake1)
-    {
-        fprintf(stderr, "Falha ao carregar imagem das fake .\n");
-        al_destroy_display(janela);
-        al_destroy_event_queue(fila_eventos);
-        return false;
-    }
-    */
-    
-
-    //RANDOMIZANDO TUDO
-
-    /*
-    placas[0] = al_load_bitmap("img/placas/placa0.png");
-    placas[1] = al_load_bitmap("img/placas/placa1.png");
-    placas[2] = al_load_bitmap("img/placas/placa2.png");
-    placas[3] = al_load_bitmap("img/placas/placa3.png");
-*/
+       
+    //ALOCANDO PLACAS DO POSTER    
     placas[4] = al_load_bitmap("img/placas/fake1.png");
     placas[5] = al_load_bitmap("img/placas/fake2.png");
     placas[6] = al_load_bitmap("img/placas/fake3.png");

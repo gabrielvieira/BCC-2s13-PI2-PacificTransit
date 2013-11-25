@@ -1,5 +1,5 @@
 //
-//  Created by GABRIEL VIEIRA on 10/09/13.qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+//  Created by GABRIEL VIEIRA on 10/09/13.
 //  Copyright (c) 2013 GABRIEL VIEIRA. All rights reserved.
 //
 
@@ -12,11 +12,8 @@
 
 int main(void)
 {
-    //placas[0].image = imgPlate3;
-
-    
-    srand(time(NULL));
     //DECLARAÇÃO DE VARIAVEIS
+    srand(time(NULL));
     bool sair = false;
     int i;
     bool move_permit = true;
@@ -32,14 +29,13 @@ int main(void)
     
      
 
-    //TESTE CONVERSAO DE INT PARA STRING
+    //VARIAVEIS PARA GERAR A PONTUAÇÃO
     char stringPontuacao[40] = "Pontuação ";
     char str[10];
 
-    // STRUCT FUNCIONANDO :)
-    //Iniciando os carros e objetos
+    
+    //INICIANDO CARROS E OBJETOS
     Car *playerCar = malloc(sizeof(Car));
-   // Car *autoCar = malloc(5 * sizeof(Car));
     Object *beer = malloc(sizeof(Object));
     Object *phone = malloc(sizeof(Object));
     Object *plate1 = malloc(sizeof(Object));
@@ -47,20 +43,17 @@ int main(void)
     Object *plate3 = malloc(sizeof(Object));
     Object *plate4 = malloc(sizeof(Object));
     
-    //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTEqqq
-    //al_draw_bitmap(preMenu, 0, 0, 0);
-    //al_flip_display(); 
-
+    //VERIFICA SE A BIBLIOTECA DO ALLEGRO FOI INICIADA CORRETAMENTE
     if (!inicializar())
     {
         return -1;
     }
 
      
-    //DESENHA IMAGEM DE FUNDO
+    //DESENHA IMAGEM DE FUNDO PELA PRIMEIRA VEZ
     al_draw_bitmap(menu, 0, 0, 0);
     al_flip_display();
-    //SOM DO JOGO
+    //RODAR SOM DO JOGO
     al_play_sample(som, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
 
     //LOOP PRINCIPAL DO JOGO
@@ -74,6 +67,7 @@ int main(void)
         sprintf(str, "%d", pontuacao);
     	strcat(stringPontuacao, str);
 
+        //AUMENTOS DE VELOCIDADE EM 3 NIVEIS
         if ((pontuacao > 1000 && pontuacao < 1100) && up_speed1 == true) 
         {
             screen_speed += 2;
@@ -106,7 +100,7 @@ int main(void)
         }
         
 
-        //FILA DE EVENTOS
+        //FILA PRINCIAPAL DE EVENTOS
         while(!al_is_event_queue_empty(fila_eventos))
         {
             ALLEGRO_EVENT evento;
@@ -130,17 +124,15 @@ int main(void)
                     tecla = 4;                           
                     break;
                 case ALLEGRO_KEY_ENTER:
-                    tecla = 5;  
-                   // menu_ativo = false;                          
+                    tecla = 5;                         
                     break;
                 case ALLEGRO_KEY_BACKSPACE:
                     tecla = 6;                        
                     break;
-                case ALLEGRO_KEY_R:
-                    //perder = false; 
-                    //reset = false;                         
+                case ALLEGRO_KEY_R:                         
                     break;      
                 case ALLEGRO_KEY_ESCAPE:
+                //PARA PAUSAR O JOGO
                     if (pause)
                     {
                         pause = false;
@@ -179,11 +171,13 @@ int main(void)
                 aloca_palcas(random_numbers);
                 free(random_numbers);
 
+                //NUMEROS RANDOMICOS PARA INICIAR AS 4 PLACAS
                 int r1 = RandomInteger(0,7);
                 int r2 = RandomInteger(0,7);
                 int r3 = RandomInteger(0,7);
                 int r4 = RandomInteger(0,7);
 
+                //RESETAR AUMENTO DE VELOCIDADE
                 if (up_speed1 == false)
                 {
                     screen_speed -=2;
@@ -215,12 +209,14 @@ int main(void)
                     up_speed3 = true;
                 }
 
+                //RESETAR POSIÇÕES OCUPADAS
                 for (i = 0; i < 6; ++i)
                 {
                     use_positions[i] = 0;
                     use_positions_obj[i] = 0;
                 }
 
+                //INICIANDO CARROS E OBJETOS
                 playerCar->number = 5;
                 init_car(playerCar);
                 init_object(beer);
@@ -234,6 +230,7 @@ int main(void)
                 phone->type = 1;
                 beer->type = 2;
 
+                //SETANDO IMAGENS DAS PLACAS
                 plate1->image.image = placas[r1];
                 plate1->type = 3;
 
@@ -249,10 +246,6 @@ int main(void)
                 reset = false;
                 countBatida = 10;
                 pontuacao = 0;
-
-
-
-               
             }
 
             if (tecla == 5)
@@ -262,9 +255,10 @@ int main(void)
             
             tecla = 0;
         }
-        
+        //VARIAVEL ESTATE RESPONSAVEL POR TROCAS AS TELAS
         if (state == 1)
         {
+            //PRIMEIRA EXPLICAÇÃO
             al_draw_bitmap(ex1, 0, 0, 0);
             if (tecla == 5)
             {
@@ -281,6 +275,7 @@ int main(void)
 
         if (state == 2)
         {
+            //SEGUNDA EXPLICAÇÃO
             al_draw_bitmap(ex2, 0, 0, 0);
             if (tecla == 5)
             {
@@ -297,25 +292,32 @@ int main(void)
 
         if(state == 3)
         {
+            //STATE EM QUE O JOGO ACONTECE
             if (pause)
             {
+                //PARA PAUSAR O JOGO
                 al_draw_text(fonte, al_map_rgb(255, 255, 255), LARGURA_TELA / 2,
                 ALTURA_TELA / 2 - al_get_font_ascent(fonte) / 2,
                 ALLEGRO_ALIGN_CENTRE, "Pause");
             }    
             else
             {
+                //MOVER TELA
                 move_screen(&telay,screen_speed);
+                //MOVER CARRO
                 move_player_car(tecla,playerCar,&move_permit);
                 
+                //MOVER ICONES DE CERVEJA E TELEFONE
                 move_beer(beer);
                 move_phone(phone);
 
+                //MOVENDO PLACAS
                 move_plate(plate1);
                 move_plate(plate2);
                 move_plate(plate3);
                 move_plate(plate4);
 
+                //COLISAO DOS OBJETOS E PLACAS
                 colision_bad_obj(playerCar,beer);
                 colision_bad_obj(playerCar,phone);
                 
@@ -325,6 +327,7 @@ int main(void)
                 colision_good_obj(playerCar,plate4);
             }
         
+            //ESCREVER PONTUAÇÃO
             al_draw_text(fonte2, al_map_rgb(255, 0, 0), LARGURA_TELA * 0.99, ALTURA_TELA * 0.01,
             ALLEGRO_ALIGN_RIGHT, stringPontuacao);
         }
@@ -341,6 +344,7 @@ int main(void)
 
          if (state == 5)
         {
+            //GERANDO TELA DE EXPLICAÇÃO DAS PLACAS
             float x1 = 120;
             float x2 = 480;
             float y1 = 110;
@@ -360,12 +364,13 @@ int main(void)
             tecla = 0;
         }
         
-        //PARA CONTROLAR O TEMPO DE EECUÇÃO
+        //PARA CONTROLAR O TEMPO DE EXECUÇÃO
         frame++;
         if (limitado && (obterTempoTimer() < 1.0 / FRAMES_POR_SEGUNDO))
         {
             al_rest((1.0 / FRAMES_POR_SEGUNDO) - obterTempoTimer());
         }
+        //MOSTRAR TELA
         al_flip_display();    
     }
  
