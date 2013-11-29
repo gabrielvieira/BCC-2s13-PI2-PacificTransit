@@ -68,7 +68,7 @@ int main(void)
     	strcat(stringPontuacao, str);
 
         //AUMENTOS DE VELOCIDADE EM 3 NIVEIS
-        if ((pontuacao > 1000 && pontuacao < 1100) && up_speed1 == true) 
+        if ((pontuacao > 500 && pontuacao < 600) && up_speed1 == true) 
         {
             screen_speed += 2;
             for (i = 0; i < 6; ++i)
@@ -79,7 +79,7 @@ int main(void)
 
         }
 
-        if ((pontuacao > 1500 && pontuacao < 1600) && up_speed2 == true) 
+        if ((pontuacao > 800 && pontuacao < 900) && up_speed2 == true) 
         {
             screen_speed += 2;
             for (i = 0; i < 6; ++i)
@@ -89,7 +89,7 @@ int main(void)
             up_speed2 = false;
         }
 
-        if ((pontuacao > 2000 && pontuacao < 2100) && up_speed3 == true) 
+        if ((pontuacao > 1200 && pontuacao < 1300) && up_speed3 == true) 
         {
             screen_speed += 2;
             for (i = 0; i < 6; ++i)
